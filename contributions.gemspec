@@ -14,4 +14,6 @@ Gem::Specification.new do |gem|
   gem.name          = "contributions"
   gem.require_paths = ["lib"]
   gem.version       = Contributions::VERSION
+
+  gem.add_development_dependency('riot')
 end
