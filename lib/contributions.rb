@@ -1,5 +1,8 @@
 require "contributions/version"
 
 module Contributions
-  # Your code goes here...
+  class Contributions
+    def initialize(hash)
+    end
+  end
 end
