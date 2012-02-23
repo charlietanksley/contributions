@@ -8,9 +8,11 @@ module Contributions
     #        :execpt (to ignore some repository), :plus (to add), and :only (to
     #        focus).
     def initialize(opts={})
-      @username = opts[:username]
-      @delay = opts[:delay] || false
-      @repositories = []
+      @username = opts.delete(:username)
+      @delay = opts.delete(:delay) || false
+
+      @addtional_repository_information = opts
+      # @repositories = gather_repository_
     end
   end
 end

@@ -9,7 +9,7 @@ context "Contributions" do
     context "assignments" do
       asserts_topic.assigns :username
       asserts_topic.assigns :delay
-      asserts_topic.assigns :repositories
+      # asserts_topic.assigns :repositories
     end
 
     context "delayed evaluation" do
