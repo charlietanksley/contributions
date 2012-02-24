@@ -124,5 +124,19 @@ context "RepositoryList" do
     end
   end
 
+  context "#only completely replaces the list" do
+    setup { Contributions::RepositoryList.new(['s/s', 's/ss', 'o/other']) }
+
+    context "when given a single repo" do
+      hookup { topic.only 'a/a' }
+      asserts(:list).equals ['a/a']
+    end
+
+    context "when given an array" do
+      hookup { topic.only ['a/a', 'b/b'] }
+      asserts(:list).equals ['a/a', 'b/b']
+    end
+  end
+
 end
 

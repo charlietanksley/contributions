@@ -92,6 +92,17 @@ module Contributions
       self
     end
 
+    # Public: Replace list of repositories with the list provided.
+    #
+    # repos - a string or an array of strings (each of which is a
+    #         'username/repo')
+    #
+    # Returns a RepositoryList
+    def only(repos)
+      @list = [repos].flatten
+      self
+    end
+
     # Public: Remove a string or array of strings from the repository
     # list.
     # repos - a string or an array of strings (each of which is a
