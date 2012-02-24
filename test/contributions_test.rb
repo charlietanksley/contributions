@@ -34,7 +34,7 @@ context "Contributions::Contributions" do
 
   context "#forks" do
     helper(:repos) do
-      [{"clone_url"=>"https://github.com/vim-scripts/test.zip.git", "fork"=>true, "forks"=>1, "name"=>"test.zip"},
+      [{"clone_url"=>"https://github.com/vim-scripts/test.zip.git", "fork"=>true, "forks"=>1, "name"=>"test.zip", "owner"=>{"login"=>"vim-scripts", "id"=>443562}},
        {"clone_url"=>"https://github.com/vim-scripts/test_syntax.vim.git", "fork"=>false, "forks"=>1, "name"=>"test_syntax.vim"}]
     end
 
@@ -42,7 +42,7 @@ context "Contributions::Contributions" do
 
     context "passes the github api work off to a GithubAPI object" do
       hookup { mock(Contributions::GithubAPI).repos('vim-scripts') { repos } }
-      asserts(:forks).equals [{"clone_url"=>"https://github.com/vim-scripts/test.zip.git", "fork"=>true, "forks"=>1, "name"=>"test.zip"}]
+      asserts(:forks).equals ['vim-scripts/test.zip']
     end
   end
 end

@@ -33,7 +33,7 @@ module Contributions
     #
     # Returns an Array.
     def forks
-      GithubAPI.repos(@username).select { |r| r["fork"] == true }
+      GithubAPI.forks(@username)
     end
 
     # Internal: Get the user's contributions to the repository.
@@ -45,6 +45,15 @@ module Contributions
   end
 
   class GithubAPI
+
+    # Public: Get just the user's repositories that are forks.
+    #
+    # Returns an Array.
+    def self.forks(username)
+      self.repos(username)
+          .select { |r| r["fork"] == true }
+          .map { |r| r["owner"]["login"] + '/' + r["name"] }
+    end
 
     # Public: Get all the user's repositories.
     #
