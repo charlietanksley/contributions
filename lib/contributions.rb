@@ -75,6 +75,8 @@ module Contributions
 
   class RepositoryList
 
+    attr_reader :list
+
     def initialize(*args)
       @list = [args].flatten
     end
@@ -86,7 +88,19 @@ module Contributions
     #
     # Returns a RepositoryList
     def add(repos)
-      @list.push(repos).flatten
+      @list.push(repos).flatten!
+      self
+    end
+
+    # Public: Remove a string or array of strings from the repository
+    # list.
+    # repos - a string or an array of strings (each of which is a
+    #         'username/repo')
+    #
+    # Returns a RepositoryList
+    def remove(repos)
+      @list.delete_if { |e| [repos].flatten.include? e }
+      self
     end
   end
 end

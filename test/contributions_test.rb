@@ -11,7 +11,6 @@ context "Contributions::Contributions" do
     context "assignments" do
       asserts_topic.assigns :username
       asserts_topic.assigns :delay
-      asserts_topic.assigns :repositories, Contributions::RepositoryList.new
     end
 
     context "when evaluation is delayed" do
@@ -86,11 +85,13 @@ context "RepositoryList" do
       setup { Contributions::RepositoryList.new }
 
       context "adds a single string" do
-        asserts(:add, 'rubinius/rubinius').equals ['rubinius/rubinius']
+        hookup { topic.add('rubinius/rubinius') }
+        asserts(:list).equals ['rubinius/rubinius']
       end
 
       context "adds an array of strings" do
-        asserts(:add, ['rubinius/rubinius', 'vim-scripts/test.vim']).equals ['rubinius/rubinius', 'vim-scripts/test.vim']
+        hookup { topic.add ['rubinius/rubinius', 'vim-scripts/test.vim'] }
+        asserts(:list).equals ['rubinius/rubinius', 'vim-scripts/test.vim']
       end
     end
 
@@ -98,13 +99,30 @@ context "RepositoryList" do
       setup { Contributions::RepositoryList.new(['s/s']) }
 
       context "adds a single string" do
-        asserts(:add, 'rubinius/rubinius').equals ['s/s', 'rubinius/rubinius']
+        hookup { topic.add 'rubinius/rubinius' }
+        asserts(:list).equals ['s/s', 'rubinius/rubinius']
       end
 
       context "adds an array of strings" do
-        asserts(:add, ['rubinius/rubinius', 'vim-scripts/test.vim']).equals ['s/s', 'rubinius/rubinius', 'vim-scripts/test.vim']
+        hookup { topic.add ['rubinius/rubinius', 'vim-scripts/test.vim'] }
+        asserts(:list).equals ['s/s', 'rubinius/rubinius', 'vim-scripts/test.vim']
       end
     end
   end
+
+  context "#remove" do
+    setup { Contributions::RepositoryList.new(['s/s', 's/ss', 'o/other']) }
+
+    context "selectively removes a single repo" do
+      hookup { topic.remove 's/s' }
+      asserts(:list).equals ['s/ss', 'o/other']
+    end
+
+    context "selectively removes an array of repos" do
+      hookup { topic.remove ['s/s', 's/ss'] }
+      asserts(:list).equals ['o/other']
+    end
+  end
+
 end
 
