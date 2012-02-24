@@ -31,23 +31,21 @@ context "Contributions::Contributions" do
       asserts(:gather).kind_of Hash
     end
   end
+end
 
-  context "#forks" do
+context "Contributions::GithubAPI" do
+  context ".forks returns just the list of forks" do
     helper(:repos) do
       [{"clone_url"=>"https://github.com/vim-scripts/test.zip.git", "fork"=>true, "forks"=>1, "name"=>"test.zip", "owner"=>{"login"=>"vim-scripts", "id"=>443562}},
        {"clone_url"=>"https://github.com/vim-scripts/test_syntax.vim.git", "fork"=>false, "forks"=>1, "name"=>"test_syntax.vim"}]
     end
 
-    setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
+    hookup { mock(Contributions::GithubAPI).repos('vim-scripts') { repos } }
+    setup { Contributions::GithubAPI.forks('vim-scripts') }
 
-    context "passes the github api work off to a GithubAPI object" do
-      hookup { mock(Contributions::GithubAPI).repos('vim-scripts') { repos } }
-      asserts(:forks).equals ['vim-scripts/test.zip']
-    end
+    asserts_topic.equals ['vim-scripts/test.zip']
   end
-end
 
-context "Contributions::GithubAPI" do
   context ".repos gets all the repositories when there are less than 100" do
     setup { Contributions::GithubAPI.repos('rubinius').count }
     
