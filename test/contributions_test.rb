@@ -31,6 +31,19 @@ context "Contributions::Contributions" do
       asserts(:gather).kind_of Hash
     end
   end
+
+  context "#forks" do
+    setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
+
+    context "calls #update on the result of a GithubAPI.forks" do
+      helper(:repos) { ['vim-scripts/test.zip'] }
+      hookup do
+        mock(Contributions::GithubAPI).forks('vim-scripts') { repos }
+        mock(topic).update(repos) { repos }
+      end
+      asserts(:forks).equals ['vim-scripts/test.zip']
+    end
+  end
 end
 
 context "Contributions::GithubAPI" do

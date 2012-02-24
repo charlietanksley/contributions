@@ -33,7 +33,7 @@ module Contributions
     #
     # Returns an Array.
     def forks
-      GithubAPI.forks(@username)
+      update(GithubAPI.forks(@username))
     end
 
     # Internal: Get the user's contributions to the repository.
