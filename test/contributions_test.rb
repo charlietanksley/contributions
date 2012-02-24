@@ -33,13 +33,16 @@ context "Contributions::Contributions" do
   end
 
   context "#forks" do
-    setup { Contributions::Contributions.new(:username => 'charlietanksley', :delay => true) }
+    helper(:repos) do
+      [{"clone_url"=>"https://github.com/vim-scripts/test.zip.git", "fork"=>true, "forks"=>1, "name"=>"test.zip"},
+       {"clone_url"=>"https://github.com/vim-scripts/test_syntax.vim.git", "fork"=>false, "forks"=>1, "name"=>"test_syntax.vim"}]
+    end
+
+    setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
 
     context "passes the github api work off to a GithubAPI object" do
-      # hookup do
-      #   mock(Contributions::GithubAPI).repos('charlietanksley') { File.open("test/fixtures/repos") { |f| f.read } }
-      # end
-      # denies(:forks).nil
+      hookup { mock(Contributions::GithubAPI).repos('vim-scripts') { repos } }
+      asserts(:forks).equals [{"clone_url"=>"https://github.com/vim-scripts/test.zip.git", "fork"=>true, "forks"=>1, "name"=>"test.zip"}]
     end
   end
 end
@@ -58,5 +61,3 @@ context "Contributions::GithubAPI" do
     # asserts_topic.equals JSON.parse(open("https://api.github.com/users/vim-scripts") { |f| f.read })["public_repos"]
   end
 end
-
-
