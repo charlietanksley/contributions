@@ -1,4 +1,6 @@
 require "contributions/version"
+require 'open-uri'
+require 'json'
 
 module Contributions
   class Contributions
@@ -31,7 +33,7 @@ module Contributions
     #
     # Returns an Array.
     def forks
-      GithubAPI.forks(@username)
+      GithubAPI.repos(@username)
     end
 
     # Internal: Get the user's contributions to the repository.
@@ -43,6 +45,9 @@ module Contributions
   end
 
   class GithubAPI
+    def self.repos(username)
+      JSON.parse(open("https://api.github.com/users/#{username}/repos?per_page=100") { |f| f.read } )
+    end
   end
 end
 

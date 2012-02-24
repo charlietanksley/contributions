@@ -17,6 +17,12 @@ Or install it yourself as:
 
     $ gem install contributions
 
+## Fair Warning:
+
+Right now, Contributions doesn't know what to do if you have more than 
+100 public repositories.  I'll fix that later.  Consider yourself 
+warned.
+
 ## Usage
 
 ### Finding contributions
