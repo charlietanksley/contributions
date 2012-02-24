@@ -72,7 +72,7 @@ If you have contributed to projects that you have not forked (perhaps
 you keep a tidy github account :)), you can add those in by passing an 
 array of projects to contributions:
 
-    Contributions.new(:username => 'u', :add => ['rubinius/rubinius'])
+    Contributions.new(:username => 'u', :plus => ['rubinius/rubinius'])
 
 Notice that you must pass both the repository name and the username in 
 this case.
