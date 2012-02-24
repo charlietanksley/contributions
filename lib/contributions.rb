@@ -13,6 +13,7 @@ module Contributions
       @username = opts.delete(:username)
       @delay = opts.delete(:delay) || false
       @addtional_repository_information = opts
+      @repositories = RepositoryList.new
       @contributions = gather unless @delay
     end
 
@@ -33,13 +34,22 @@ module Contributions
     #
     # Returns an Array.
     def forks
-      update(GithubAPI.forks(@username))
+      @repositories.add GithubAPI.forks(@username)
     end
 
     # Internal: Get the user's contributions to the repository.
     #
     # Returns a Hash.
     def contributions(repository)
+    end
+
+    # Internal: Combine the user's explicit preferences with an array of
+    # forks.
+    #
+    # array - Array of forks (in 'username/repo' form).
+    #
+    # Returns an Array.
+    def update(array)
     end
 
   end
@@ -60,6 +70,23 @@ module Contributions
     # Returns an Array.
     def self.repos(username)
       JSON.parse(open("https://api.github.com/users/#{username}/repos?per_page=100") { |f| f.read } )
+    end
+  end
+
+  class RepositoryList
+
+    def initialize(*args)
+      @list = [args].flatten
+    end
+
+    # Public: Add a string or array of strings to the repository list.
+    #
+    # repos - a string or an array of strings (each of which is a
+    #         'username/repo')
+    #
+    # Returns a RepositoryList
+    def add(repos)
+      @list.push(repos).flatten
     end
   end
 end

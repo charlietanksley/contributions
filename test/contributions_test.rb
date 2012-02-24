@@ -11,6 +11,7 @@ context "Contributions::Contributions" do
     context "assignments" do
       asserts_topic.assigns :username
       asserts_topic.assigns :delay
+      asserts_topic.assigns :repositories, Contributions::RepositoryList.new
     end
 
     context "when evaluation is delayed" do
@@ -35,15 +36,21 @@ context "Contributions::Contributions" do
   context "#forks" do
     setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
 
-    context "calls #update on the result of a GithubAPI.forks" do
+    context "adds the result of a GithubAPI.forks to the repositories ivar" do
       helper(:repos) { ['vim-scripts/test.zip'] }
       hookup do
         mock(Contributions::GithubAPI).forks('vim-scripts') { repos }
-        mock(topic).update(repos) { repos }
+        any_instance_of(Contributions::RepositoryList) { |u| mock(u).add(repos) { repos } }
       end
       asserts(:forks).equals ['vim-scripts/test.zip']
     end
   end
+
+  # context "#update" do
+  #   context "alters the array as per #remove, #add, and #only" do
+  #     setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
+  #   end
+  # end
 end
 
 context "Contributions::GithubAPI" do
@@ -72,3 +79,32 @@ context "Contributions::GithubAPI" do
     # asserts_topic.equals JSON.parse(open("https://api.github.com/users/vim-scripts") { |f| f.read })["public_repos"]
   end
 end
+
+context "RepositoryList" do
+  context "#add" do
+    context "with a blank canvas" do
+      setup { Contributions::RepositoryList.new }
+
+      context "adds a single string" do
+        asserts(:add, 'rubinius/rubinius').equals ['rubinius/rubinius']
+      end
+
+      context "adds an array of strings" do
+        asserts(:add, ['rubinius/rubinius', 'vim-scripts/test.vim']).equals ['rubinius/rubinius', 'vim-scripts/test.vim']
+      end
+    end
+
+    context "with a starting array" do
+      setup { Contributions::RepositoryList.new(['s/s']) }
+
+      context "adds a single string" do
+        asserts(:add, 'rubinius/rubinius').equals ['s/s', 'rubinius/rubinius']
+      end
+
+      context "adds an array of strings" do
+        asserts(:add, ['rubinius/rubinius', 'vim-scripts/test.vim']).equals ['s/s', 'rubinius/rubinius', 'vim-scripts/test.vim']
+      end
+    end
+  end
+end
+
