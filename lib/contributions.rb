@@ -11,19 +11,19 @@ module Contributions
       @username = opts.delete(:username)
       @delay = opts.delete(:delay) || false
       @addtional_repository_information = opts
-      @repositories = gather unless @delay
-      @contributions = Hash.new
+      @contributions = gather unless @delay
     end
 
     # Public: Determine all the contributions for the user.
     #
     # Returns nothing.
     def gather
+      conts = Hash.new
       forks.each do |f|
-        @contributions.merge contributions(f)
+        conts.merge contributions(f)
       end
 
-      @contributions
+      conts
     end
 
     # Internal: Get the names of all the projects that the user has
@@ -31,6 +31,7 @@ module Contributions
     #
     # Returns an Array.
     def forks
+      GithubAPI.forks(@username)
     end
 
     # Internal: Get the user's contributions to the repository.
@@ -39,6 +40,9 @@ module Contributions
     def contributions(repository)
     end
 
+  end
 
+  class GithubAPI
   end
 end
+
