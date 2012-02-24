@@ -39,17 +39,43 @@ context "Contributions::Contributions" do
       helper(:repos) { ['vim-scripts/test.zip'] }
       hookup do
         mock(Contributions::GithubAPI).forks('vim-scripts') { repos }
-        any_instance_of(Contributions::RepositoryList) { |u| mock(u).add(repos) { repos } }
+        # any_instance_of(Contributions::RepositoryList) { |u| mock(u).add(repos) { repos } }
       end
       asserts(:forks).equals ['vim-scripts/test.zip']
     end
   end
 
-  # context "#update" do
-  #   context "alters the array as per #remove, #add, and #only" do
-  #     setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
-  #   end
-  # end
+  context "#update" do
+    context "changes nothing if there are no updates" do
+      setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
+      hookup { topic.repositories = ['s/s', 'h/h'] }
+
+      asserts(:update).equals ['s/s', 'h/h']
+    end
+
+    context "alters the array as per execpt and add" do
+      setup do
+        Contributions::Contributions.new(:username => 'vim-scripts',
+                                         :delay => true,
+                                         :remove => ['h/h'],
+                                         :add => ['r/r'])
+      end
+      hookup { topic.repositories = ['s/s', 'h/h'] }
+
+      asserts(:update).equals ['s/s', 'r/r']
+    end
+
+    context "alters the array as per execpt and add" do
+      setup do
+        Contributions::Contributions.new(:username => 'vim-scripts',
+                                         :delay => true,
+                                         :only => ['h/h'])
+      end
+      hookup { topic.repositories = ['s/s', 'z/z'] }
+
+      asserts(:update).equals ['h/h']
+    end
+  end
 end
 
 context "Contributions::GithubAPI" do

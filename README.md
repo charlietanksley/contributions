@@ -72,13 +72,13 @@ you are either an author or committer.)
 Some people have lots of forks that they don't contribute to.  In that 
 case, you can pass an array of projects to ignore to contributions:
 
-    Contributions.new(:username => 'u', :except => ['homebrew'])
+    Contributions.new(:username => 'u', :remove => ['homebrew'])
 
 If you have contributed to projects that you have not forked (perhaps 
 you keep a tidy github account :)), you can add those in by passing an 
 array of projects to contributions:
 
-    Contributions.new(:username => 'u', :plus => ['rubinius/rubinius'])
+    Contributions.new(:username => 'u', :add => ['rubinius/rubinius'])
 
 Notice that you must pass both the repository name and the username in 
 this case.

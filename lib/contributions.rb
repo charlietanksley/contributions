@@ -35,6 +35,7 @@ module Contributions
     # Returns an Array.
     def forks
       @repositories.add GithubAPI.forks(@username)
+      update
     end
 
     # Internal: Get the user's contributions to the repository.
@@ -46,12 +47,22 @@ module Contributions
     # Internal: Combine the user's explicit preferences with an array of
     # forks.
     #
-    # array - Array of forks (in 'username/repo' form).
-    #
     # Returns an Array.
-    def update(array)
+    def update
+      @addtional_repository_information.each_pair do |k,v|
+        @repositories.send(k.to_sym, v)
+      end
+
+      repositories
     end
 
+    def repositories=(array)
+      @repositories = RepositoryList.new(array)
+    end
+
+    def repositories
+      @repositories.list
+    end
   end
 
   class GithubAPI
