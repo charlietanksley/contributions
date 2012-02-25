@@ -22,9 +22,15 @@ context "Contributions::Contributions" do
   context "#contributions" do
     setup do
       Contributions::Contributions.new(:username => 'u', :delay => true)
-      # topic.repositories
     end
-    asserts(:contributions, 'rubinius/rubinius').equals 'no way'
+
+    hookup do
+      mock(Contributions::GithubAPI).user('u') { 'Charlie Tanksley' }
+      mock(Contributions::GithubAPI).contributions('Charlie Tanksley',
+                                                   {:username => 'r', :repository => 'r'}) { 'no way' }
+    end
+
+    asserts(:contributions, 'r/r').equals 'no way'
   end
 
   context "#gather" do

@@ -38,9 +38,17 @@ module Contributions
     #
     # Returns a Hash.
     def contributions(repository)
-      @repositories.key_value_pairs.each do |e|
-        GithubAPI.contributions(e)
-      end
+      GithubAPI.contributions GithubAPI.user(@username), repository_to_hash(repository)
+    end
+
+    # Internal: Split a 'username/repo_name' string into a hash.
+    #
+    # repository - 'username/repository_name'.
+    #
+    # Returns a Hash.
+    def repository_to_hash(repository)
+      r = repository.split('/')
+      Hash[:username => r[0], :repository => r[1]]
     end
 
     # Internal: Combine the user's explicit preferences with an array of
