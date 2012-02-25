@@ -42,7 +42,11 @@ module Contributions
     #
     # Returns a Hash.
     def contributions(repository)
+      @repositories.key_value_pairs.each do |e|
+        GithubAPI.contributions(e)
+      end
     end
+
 
     # Internal: Combine the user's explicit preferences with an array of
     # forks.
@@ -103,6 +107,19 @@ module Contributions
       self
     end
 
+    # Public: Turn repositories into key value pairs.
+    #
+    # Returns an Array of Hashes {:username, :repository}
+    def key_value_pairs
+      results = []
+      @list.each do |e|
+        p = e.split('/')
+        results.push Hash[:username => p[0], :repository => p[1]]
+      end
+
+      results
+    end
+
     # Public: Replace list of repositories with the list provided.
     #
     # repos - a string or an array of strings (each of which is a
@@ -126,4 +143,3 @@ module Contributions
     end
   end
 end
-

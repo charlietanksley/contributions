@@ -19,6 +19,14 @@ context "Contributions::Contributions" do
     end
   end
 
+  context "#contributions" do
+    setup do
+      Contributions::Contributions.new(:username => 'u', :delay => true)
+      # topic.repositories
+    end
+    asserts(:contributions, 'rubinius/rubinius').equals 'no way'
+  end
+
   context "#gather" do
     setup { Contributions::Contributions.new(:username => 'u', :delay => true) }
 
@@ -39,7 +47,6 @@ context "Contributions::Contributions" do
       helper(:repos) { ['vim-scripts/test.zip'] }
       hookup do
         mock(Contributions::GithubAPI).forks('vim-scripts') { repos }
-        # any_instance_of(Contributions::RepositoryList) { |u| mock(u).add(repos) { repos } }
       end
       asserts(:forks).equals ['vim-scripts/test.zip']
     end
@@ -162,6 +169,13 @@ context "RepositoryList" do
       hookup { topic.only ['a/a', 'b/b'] }
       asserts(:list).equals ['a/a', 'b/b']
     end
+  end
+
+  context "#key_value_pairs splits into key value pairs" do
+    setup { Contributions::RepositoryList.new(['s/s', 's/ss', 'o/other']) }
+    asserts(:key_value_pairs).equals [{:username => 's', :repository => 's'},
+                                      {:username => 's', :repository => 'ss'},
+                                      {:username => 'o', :repository => 'other'}]
   end
 
 end
