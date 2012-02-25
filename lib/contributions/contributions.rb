@@ -38,7 +38,7 @@ module Contributions
     #
     # Returns a Hash.
     def contributions(repository)
-      GithubAPI.contributions GithubAPI.user(@username), repository_to_hash(repository)
+      GithubAPI.contributions GithubAPI.name(@username), repository_to_hash(repository)
     end
 
     # Internal: Split a 'username/repo_name' string into a hash.

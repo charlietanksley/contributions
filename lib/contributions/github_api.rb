@@ -19,5 +19,24 @@ module Contributions
     def self.repos(username)
       JSON.parse(open("https://api.github.com/users/#{username}/repos?per_page=100") { |f| f.read } )
     end
+
+    # Public: Get the name of the user.
+    #
+    # username - github username.
+    #
+    # Returns a String.
+    def self.name(username)
+      self.user(username)["name"]
+    end
+
+    # Internal: Get the user info (all of it) from github.
+    #
+    # username - github username.
+    #
+    # Returns a Hash.
+    def self.user(username)
+      JSON.parse(open("https://api.github.com/users/#{username}") { |f| f.read } )
+    end
+
   end
 end

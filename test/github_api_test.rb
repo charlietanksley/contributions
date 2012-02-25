@@ -26,4 +26,9 @@ context "Contributions::GithubAPI" do
     
     # asserts_topic.equals JSON.parse(open("https://api.github.com/users/vim-scripts") { |f| f.read })["public_repos"]
   end
+
+  context ".name returns the name of the user" do
+    setup { Contributions::GithubAPI.name('charlietanksley') }
+    asserts_topic.equals 'Charlie Tanksley'
+  end
 end

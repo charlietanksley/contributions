@@ -25,7 +25,7 @@ context "Contributions::Contributions" do
     end
 
     hookup do
-      mock(Contributions::GithubAPI).user('u') { 'Charlie Tanksley' }
+      mock(Contributions::GithubAPI).name('u') { 'Charlie Tanksley' }
       mock(Contributions::GithubAPI).contributions('Charlie Tanksley',
                                                    {:username => 'r', :repository => 'r'}) { 'no way' }
     end
