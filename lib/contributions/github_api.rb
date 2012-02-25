@@ -13,13 +13,6 @@ module Contributions
           .map { |r| r["owner"]["login"] + '/' + r["name"] }
     end
 
-    # Public: Get all the user's repositories.
-    #
-    # Returns an Array.
-    def self.repos(username)
-      JSON.parse(open("https://api.github.com/users/#{username}/repos?per_page=100") { |f| f.read } )
-    end
-
     # Public: Get the name of the user.
     #
     # username - github username.
@@ -27,6 +20,13 @@ module Contributions
     # Returns a String.
     def self.name(username)
       self.user(username)["name"]
+    end
+
+    # Public: Get all the user's repositories.
+    #
+    # Returns an Array.
+    def self.repos(username)
+      JSON.parse(open("https://api.github.com/users/#{username}/repos?per_page=100") { |f| f.read } )
     end
 
     # Internal: Get the user info (all of it) from github.
