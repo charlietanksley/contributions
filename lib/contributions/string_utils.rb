@@ -56,5 +56,22 @@ module Contributions
     def self.remove_empty(array)
       array.delete_if { |a| a[0].empty? && a[1].nil? }
     end
+
+    # Internal: Convert a pair of arrays into a hash with the first as
+    # keys.
+    #
+    # keys   - an Array of keys.
+    # values - an Array of values.
+    #
+    # Returns a Hash.
+    def self.zip_to_hash(keys, values)
+      value = Hash.new
+      zipped = keys.zip values
+      zipped.each do |pair|
+        value[pair.first] = pair.last || ''
+      end
+
+      value
+    end
   end
 end

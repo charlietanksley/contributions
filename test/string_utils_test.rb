@@ -19,6 +19,18 @@ context "StringUtils" do
     asserts_topic.size 2
   end
 
+  context ".zip_to_hash" do
+    context "creates a hash with the first array as the key" do
+      setup { Contributions::StringUtils.zip_to_hash([:k, :v, :e], ['key', 'value', 'empty']) }
+      asserts_topic.equals Hash[:k => 'key', :v => 'value', :e => 'empty']
+    end
+
+    context "creates a hash with the first array as the key and '' for any empty values" do
+      setup { Contributions::StringUtils.zip_to_hash([:k, :v, :e], ['key']) }
+      asserts_topic.equals Hash[:k => 'key', :v => '', :e => '']
+    end
+  end
+
   ## Move this test to StringUtils
   # context ".parse turns a hash of commit info into a useful hash" do
   #   setup do
