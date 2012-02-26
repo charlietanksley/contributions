@@ -3,8 +3,9 @@ require 'tmpdir'
 module Contributions
   class Git
 
+    ENDING    = " CONTRIBUTIONS_ENDING "
+    KEYS      = [:sha, :date, :subject, :body]
     SEPARATOR = " CONTRIBUTIONS_SEPARATOR "
-    ENDING = " CONTRIBUTIONS_ENDING "
 
     # Public: Get all the contributions in a repository by a user
     # (contributions for which the user is the *author*).
@@ -16,7 +17,7 @@ module Contributions
     # Returns an Array of Hashes with keys for :sha, :date, :subject, :body
     def self.contributions(user, repository)
       log = self.clone(repository) { self.read_log(user) }
-      StringUtils.parse(log, SEPARATOR, ENDING)
+      StringUtils.string_to_hash(log, KEYS, SEPARATOR, ENDING)
     end
 
     # Public: Clone a repository and run the block passed inside the
