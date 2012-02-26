@@ -11,8 +11,20 @@ module Contributions
       @username = opts.delete(:username)
       @delay = opts.delete(:delay) || false
       @addtional_repository_information = opts
-      @repositories = RepositoryList.new
+      setup_repositories
+      #@repositories = forks#RepositoryList.new
       @contributions = gather unless @delay
+    end
+
+    # Public: Add a repository (or array of repositories).
+    #
+    # repos - a 'username/repository' String or Array of such strings.
+    #
+    # Returns the updated array of repositories.
+    def add(repos)
+      @repositories.add(repos)
+
+      repositories
     end
 
     # Public: Return a user's OSS contributions as a hash.
@@ -42,6 +54,17 @@ module Contributions
       conts
     end
 
+    # Public: Remove a repository (or array of repositories).
+    #
+    # repos - a 'username/repository' String or Array of such strings.
+    #
+    # Returns the updated array of repositories.
+    def remove(repos)
+      @repositories.remove(repos)
+
+      repositories
+    end
+
     # Internal: Get the names of all the projects that the user has
     # forked and/or wants us to look into.
     #
@@ -49,6 +72,11 @@ module Contributions
     def forks
       @repositories.add GithubAPI.forks(@username)
       update
+    end
+
+    def setup_repositories
+      @repositories = RepositoryList.new
+      forks
     end
 
     # Internal: Get the user's contributions to the repository.

@@ -57,6 +57,36 @@ context "Contributions::Contributions" do
     end
   end
 
+  context "manipulators" do
+    setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
+
+    context "#remove will remove a single repository" do
+      hookup { topic.repositories = ['r/r', 's/s', 't/t'] }
+      asserts(:remove, 's/s').equals ['r/r', 't/t']
+      asserts(:repositories).equals ['r/r', 't/t']
+    end
+
+    context "#remove will remove an array of repositories" do
+      hookup { topic.repositories = ['r/r', 's/s', 't/t'] }
+      asserts(:remove, ['r/r', 't/t']).equals ['s/s']
+      asserts(:repositories).equals ['s/s']
+    end
+
+    context "#add will add a single repository" do
+      hookup { topic.repositories = ['r/r', 's/s'] }
+      asserts(:add, 't/t').equals ['r/r', 's/s', 't/t']
+      asserts(:repositories).equals ['r/r', 's/s', 't/t']
+    end
+
+    context "#add will add an array of repositories" do
+      hookup { topic.repositories = ['r/r'] }
+      asserts(:add, ['s/s', 't/t']).equals ['r/r', 's/s', 't/t']
+      asserts(:repositories).equals ['r/r', 's/s', 't/t']
+    end
+
+
+  end
+
   context "#update" do
     context "changes nothing if there are no updates" do
       setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
