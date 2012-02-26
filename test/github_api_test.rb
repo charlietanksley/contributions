@@ -31,4 +31,9 @@ context "Contributions::GithubAPI" do
     setup { Contributions::GithubAPI.name('charlietanksley') }
     asserts_topic.equals 'Charlie Tanksley'
   end
+
+  context ".parent returns the name of the forked repository" do
+    setup { Contributions::GithubAPI.parent('charlietanksley/riot') }
+    asserts_topic.equals 'thumblemonks/riot'
+  end
 end

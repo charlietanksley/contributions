@@ -22,6 +22,17 @@ module Contributions
       self.user(username)["name"]
     end
 
+    # Public: Get the name of the forked repository.
+    #
+    # repository - a 'username/repository_name' string.
+    #
+    # Returns a String.
+    def self.parent(repository)
+      username, repo_name = repository.split('/')
+      repo_info = self.repository(repository)
+      repo_info["parent"]["owner"]["login"] + '/' + repo_name
+    end
+
     # Public: Get all the user's repositories.
     #
     # Returns an Array.
@@ -36,6 +47,15 @@ module Contributions
     # Returns a Hash.
     def self.user(username)
       JSON.parse(open("https://api.github.com/users/#{username}") { |f| f.read } )
+    end
+
+    # Internal: Get the repository info (all of it) from github.
+    #
+    # repository - a 'username/repository_name' string.
+    #
+    # Returns a Hash.
+    def self.repository(repository)
+      JSON.parse(open("https://api.github.com/repos/#{repository}") { |f| f.read } )
     end
 
   end
