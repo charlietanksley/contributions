@@ -26,8 +26,7 @@ context "Contributions::Contributions" do
 
     hookup do
       mock(Contributions::GithubAPI).name('u') { 'Charlie Tanksley' }
-      mock(Contributions::GithubAPI).contributions('Charlie Tanksley',
-                                                   {:username => 'r', :repository => 'r'}) { 'no way' }
+      mock(Contributions::GithubAPI).contributions('Charlie Tanksley', 'r/r') { 'no way' }
     end
 
     asserts(:contributions, 'r/r').equals 'no way'
