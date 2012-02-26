@@ -26,10 +26,10 @@ context "Contributions::Contributions" do
 
     hookup do
       mock(Contributions::GithubAPI).name('u') { 'Charlie Tanksley' }
-      mock(Contributions::GithubAPI).contributions('Charlie Tanksley', 'r/r') { 'no way' }
+      mock(Contributions::Git).contributions('Charlie Tanksley', 'thumblemonks/riot') { 'no way' }
     end
 
-    asserts(:contributions, 'r/r').equals 'no way'
+    asserts(:contributions, 'thumblemonks/riot').equals 'no way'
   end
 
   context "#gather" do

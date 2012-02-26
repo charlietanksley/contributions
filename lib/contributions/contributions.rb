@@ -1,3 +1,5 @@
+require 'json'
+
 module Contributions
   class Contributions
 
@@ -13,13 +15,28 @@ module Contributions
       @contributions = gather unless @delay
     end
 
+    # Public: Return a user's OSS contributions as a hash.
+    #
+    # Returns a Hash.
+    def contributions_as_hash
+      @contributions
+    end
+
+    # Public: Return a user's OSS contributions as JSON.
+    #
+    # Returns JSON.
+    def contributions_as_json
+      JSON.generate(@contributions)
+    end
+
+
     # Public: Determine all the contributions for the user.
     #
     # Returns nothing.
     def gather
       conts = Hash.new
       forks.each do |f|
-        conts.merge contributions(f)
+        conts[f] = contributions(f)
       end
 
       conts
@@ -38,7 +55,7 @@ module Contributions
     #
     # Returns a Hash.
     def contributions(repository)
-      GithubAPI.contributions GithubAPI.name(@username), repository
+      Git.contributions GithubAPI.name(@username), repository
     end
 
     # Internal: Combine the user's explicit preferences with an array of
