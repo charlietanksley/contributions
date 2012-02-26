@@ -4,14 +4,36 @@ module Contributions
     # Public: Read a long string of commit data and turn it into a
     # hash.
     #
-    # string - a string of commit data.
+    # string    - a string of commit data.
+    # separator - the separator between values in an entry.
+    # ending    - the separator between entries.
+    # keys      - an Array of keys for the final hash.
     #
     # Returns a Hash.
-    def self.parse(string, separator, ending)
+    def self.string_to_hash(string, keys, separator, *ending)
       s = string.dup
-      self.split!(s, ending).each do |e|
-        self.remove_empty(self.split!(e, separator))
+      s_as_array = ending.empty? ? [s] : self.split!(s, ending[0])
+
+      s_as_array.map! { |e| self.split!(e, separator) }
+      self.remove_empty(s_as_array)
+
+      s_as_array.map! do |e|
+        e.map! { |line| line.strip }
+        self.zip_to_hash(keys, e)
       end
+
+      s_as_array.map do |e|
+        self.short_dates(e)
+      end
+
+      # s_as_array.map do |e|
+      #   self.zip_to_hash(keys, e)
+      # end
+
+
+      # self.split!(s, ending).each do |e|
+      #   self.remove_empty(self.split!(e, separator))
+      # end
 
       # Now we need the zip move, then to a hash, then replace nils with
       # ''
@@ -54,7 +76,29 @@ module Contributions
     #
     # Returns an Array of Strings (modified)
     def self.remove_empty(array)
-      array.delete_if { |a| a[0].empty? && a[1].nil? }
+      array.delete_if { |a| self.practically_empty?(a[0]) && a[1].nil? }
+    end
+
+    # Internal: Determine whether a string has any content.
+    #
+    # Examples:
+    #
+    #    StringUtils.practically_empty?('')
+    #    # => true
+    #    StringUtils.practically_empty?("\n\n")
+    #    # => true
+    #    StringUtils.practically_empty?("a\n")
+    #    # => false
+    #
+    # Returns a Boolean.
+    def self.practically_empty?(arg)
+      if arg.empty?
+        return true
+      elsif !arg.match /\w/
+        return true
+      else
+        return false
+      end
     end
 
     # Internal: Convert a pair of arrays into a hash with the first as
@@ -72,6 +116,18 @@ module Contributions
       end
 
       value
+    end
+
+    # Internal: Convert date format to a simpler one.
+    #
+    # hash - a hash with a :date key
+    #
+    # Returns a Hash.
+    def self.short_dates(hash)
+      old_date = hash[:date]
+      hash[:date] = old_date.match(/(\d{4}-\d{2}-\d{2})/)[1]
+
+      hash
     end
   end
 end

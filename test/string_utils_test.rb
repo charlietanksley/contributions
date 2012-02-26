@@ -15,7 +15,7 @@ context "StringUtils" do
   end
 
   context ".remove_empty throws out any 'blank' arrays" do
-    setup { Contributions::StringUtils.remove_empty([['s'], ['', 's'], ['']]) }
+    setup { Contributions::StringUtils.remove_empty([['s'], ['', 's'], [''], ["\n\n"]]) }
     asserts_topic.size 2
   end
 
@@ -31,21 +31,32 @@ context "StringUtils" do
     end
   end
 
-  ## Move this test to StringUtils
-  # context ".parse turns a hash of commit info into a useful hash" do
-  #   setup do
-  #     a = "1b90c5e CONTRIBUTIONS_SEPARATOR 2011-09-13 07:49:43 -0500 CONTRIBUTIONS_SEPARATOR remove mention of deprecated exists from README CONTRIBUTIONS_SEPARATOR  CONTRIBUTIONS_ENDING \n7201941 CONTRIBUTIONS_SEPARATOR 2011-09-13 07:48:53 -0500 CONTRIBUTIONS_SEPARATOR add deprecation warning to exists macro CONTRIBUTIONS_SEPARATOR  CONTRIBUTIONS_ENDING \n1620141 CONTRIBUTIONS_SEPARATOR 2011-12-16 19:26:58 -0500 CONTRIBUTIONS_SEPARATOR adjust input boxes to be same height as buttons CONTRIBUTIONS_SEPARATOR There was this weird thing happening where the inline submit button on a\nform would be like twice as tall as the text input area (notably on the\nuser_search form, but in a few other places it looked weird).  This\nmakes all those a standard height (the same as the default Twitter\nbutton height). CONTRIBUTIONS_ENDING \n\n"
-  #     Contributions::Git.parse(a)
-  #   end
+  context ".string_to_hash turns a hash of commit info into a useful hash" do
+    setup do
+      one = "1b90c5e CONTRIBUTIONS_SEPARATOR 2011-09-13 07:49:43 -0500 CONTRIBUTIONS_SEPARATOR remove mention of deprecated exists from README CONTRIBUTIONS_SEPARATOR  CONTRIBUTIONS_ENDING \n"
+      two = "7201941 CONTRIBUTIONS_SEPARATOR 2011-09-13 07:48:53 -0500 CONTRIBUTIONS_SEPARATOR add deprecation warning to exists macro CONTRIBUTIONS_SEPARATOR  CONTRIBUTIONS_ENDING \n"
+      three = "1620141 CONTRIBUTIONS_SEPARATOR 2011-12-16 19:26:58 -0500 CONTRIBUTIONS_SEPARATOR adjust input boxes to be same height as buttons CONTRIBUTIONS_SEPARATOR There was this weird thing happening where the inline submit button on a\nform would be like twice as tall as the text input area (notably on the\nuser_search form, but in a few other places it looked weird).  This\nmakes all those a standard height (the same as the default Twitter\nbutton height). CONTRIBUTIONS_ENDING \n\n"
+      Contributions::StringUtils.string_to_hash([one, two, three].join, [:sha, :date, :subject, :body], separator, ending)
+    end
 
-  #   asserts_topic.equals [{:sha => "1b90c5e",
-  #                         :date => "2011-09-13",
-  #                         :subject =>  "remove mention of deprecated exists from README",
-  #                         :body => ''},
-  #                         {:sha => "1620141",
-  #                         :date => "2011-12-16",
-  #                         :subject => "adjust input boxes to be same height as buttons",
-  #                         :body => "There was this weird thing happening where the inline submit button on a\nform would be like twice as tall as the text input area (notably on the\nuser_search form, but in a few other places it looked weird).  This\nmakes all those a standard height (the same as the default Twitter\nbutton height)."}]
-  # end
+    asserts_topic.equals [{:sha => "1b90c5e",
+                          :date => "2011-09-13",
+                          :subject =>  "remove mention of deprecated exists from README",
+                          :body => ''},
+                          {:sha=>"7201941",
+                           :date=>"2011-09-13",
+                           :subject=>"add deprecation warning to exists macro",
+                           :body=>""},
+                          {:sha=>"1620141",
+                           :date=>"2011-12-16",
+                           :subject=>"adjust input boxes to be same height as buttons",
+                           :body=>"There was this weird thing happening where the inline submit button on a\nform would be like twice as tall as the text input area (notably on the\nuser_search form, but in a few other places it looked weird).  This\nmakes all those a standard height (the same as the default Twitter\nbutton height)."}]
+  end
+
+  context ".short_dates gives you cleaner dates" do
+    setup { Contributions::StringUtils.short_dates(Hash[:sha=>"7201941", :date=>"2011-09-13 07:48:53 -0500", :subject=>"add deprecation warning to exists macro", :body=>""]) }
+
+    asserts_topic.equals Hash[:sha=>"7201941", :date=>"2011-09-13", :subject=>"add deprecation warning to exists macro", :body=>""]
+  end
 
 end
