@@ -3,16 +3,6 @@ require 'contributions/git'
 
 context "Contributions::Git" do
   context ".contributions" do
-    context "calls for a clone to be created" do
-      hookup do
-        mock(Contributions::Git).clone('r/r') { 'string' }
-        mock(Contributions::StringUtils).parse('string', Contributions::Git::SEPARATOR, Contributions::Git::ENDING ) { true }
-      end
-      setup { Contributions::Git.contributions('u', 'r/r') }
-
-      denies_topic.nil
-    end
-
     context 'determines all the user\'s contributions' do
       setup { Contributions::Git.contributions('Charlie Tanksley', 'thumblemonks/riot') }
 
