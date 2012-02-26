@@ -30,7 +30,8 @@ module Contributions
     # Returns the return value of the block.
     def self.clone(repository, &block)
       value = ''
-      Dir.mktmpdir('git') do |dir|
+      repo_name = repository.match(/([^\/]*$)/)[1]
+      Dir.mktmpdir(repo_name) do |dir|
         system "git clone -q https://github.com/#{repository} #{dir}/contributions"
         Dir.chdir(dir + '/contributions') do
           value = yield
