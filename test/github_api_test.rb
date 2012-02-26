@@ -2,16 +2,18 @@ require 'teststrap'
 require 'contributions/github_api'
 
 context "Contributions::GithubAPI" do
-  context ".forks returns just the list of forks" do
-    helper(:repos) do
-      [{"clone_url"=>"https://github.com/vim-scripts/test.zip.git", "fork"=>true, "forks"=>1, "name"=>"test.zip", "owner"=>{"login"=>"vim-scripts", "id"=>443562}},
-       {"clone_url"=>"https://github.com/vim-scripts/test_syntax.vim.git", "fork"=>false, "forks"=>1, "name"=>"test_syntax.vim"}]
+  context ".forks" do
+    setup { Contributions::GithubAPI.forks('charlietanksley') }
+
+    context "gets a list of all the forks" do
+      setup { topic.count }
+      denies_topic.equals 0
     end
 
-    hookup { mock(Contributions::GithubAPI).repos('vim-scripts') { repos } }
-    setup { Contributions::GithubAPI.forks('vim-scripts') }
-
-    asserts_topic.equals ['vim-scripts/test.zip']
+    context "gets the original names, not the name of the fork" do
+      denies_topic.includes 'charlietanksley/riot'
+      asserts_topic.includes 'thumblemonks/riot'
+    end
   end
 
   context ".repos gets all the repositories when there are less than 100" do

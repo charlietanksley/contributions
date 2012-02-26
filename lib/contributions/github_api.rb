@@ -11,6 +11,7 @@ module Contributions
       self.repos(username)
           .select { |r| r["fork"] == true }
           .map { |r| r["owner"]["login"] + '/' + r["name"] }
+          .map { |r| self.parent(r) }
     end
 
     # Public: Get the name of the user.
