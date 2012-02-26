@@ -29,12 +29,15 @@ module Contributions
     #
     # Returns the return value of the block.
     def self.clone(repository, &block)
+      value = ''
       Dir.mktmpdir('git') do |dir|
         system "git clone -q https://github.com/#{repository} #{dir}/contributions"
         Dir.chdir(dir + '/contributions') do
-          return yield
+          value = yield
         end
       end
+
+      value
     end
 
     # Internal: The command to read the git log.
