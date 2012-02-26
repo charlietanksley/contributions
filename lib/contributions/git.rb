@@ -1,4 +1,5 @@
 require 'tmpdir'
+require 'contributions/string_utils'
 
 module Contributions
   class Git
@@ -32,8 +33,9 @@ module Contributions
       value = ''
       repo_name = repository.match(/([^\/]*$)/)[1]
       Dir.mktmpdir(repo_name) do |dir|
-        system "git clone -q https://github.com/#{repository} #{dir}/contributions"
-        Dir.chdir(dir + '/contributions') do
+        cloned_repo_name = dir + '/' + repo_name
+        system "git clone -q https://github.com/#{repository} #{cloned_repo_name}"
+        Dir.chdir(cloned_repo_name) do
           value = yield
         end
       end
