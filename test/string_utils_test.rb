@@ -16,7 +16,6 @@ context "StringUtils" do
 
   context ".remove_empty throws out any 'blank' arrays" do
     setup { Contributions::StringUtils.remove_empty([['s'], ['', 's'], ['']]) }
-
     asserts_topic.size 2
   end
 

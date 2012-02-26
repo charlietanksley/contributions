@@ -1,7 +1,7 @@
 module Contributions
   class StringUtils
       
-    # Internal: Read a long string of commit data and turn it into a
+    # Public: Read a long string of commit data and turn it into a
     # hash.
     #
     # string - a string of commit data.
@@ -9,11 +9,19 @@ module Contributions
     # Returns a Hash.
     def self.parse(string, separator, ending)
       s = string.dup
-      array = string.split()
-      small_arrays = array.map { |e| e.split(separator).map { |l| l.strip } }
-      small_arrays.delete_if { |a| a[0] == "" and a[1] == nil }
-      small_arrays.map! { |a| [:sha, :date, :subject, :body].zip a }
-      small_arrays
+      self.split!(s, ending).each do |e|
+        self.remove_empty(self.split!(e, separator))
+      end
+
+      # Now we need the zip move, then to a hash, then replace nils with
+      # ''
+
+      # s = string.dup
+      # array = string.split()
+      # small_arrays = array.map { |e| e.split(separator).map { |l| l.strip } }
+      # small_arrays.delete_if { |a| a[0] == "" and a[1] == nil }
+      # small_arrays.map! { |a| [:sha, :date, :subject, :body].zip a }
+      # small_arrays
 
 
 
@@ -46,7 +54,7 @@ module Contributions
     #
     # Returns an Array of Strings (modified)
     def self.remove_empty(array)
-      array.delete_if { |a| a[0].empty? and a[1].nil? }
+      array.delete_if { |a| a[0].empty? && a[1].nil? }
     end
   end
 end
