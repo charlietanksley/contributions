@@ -11,9 +11,7 @@ module Contributions
     #        :add (to add), and :only (to focus).
     def initialize(opts={})
       @username = opts.delete(:username)
-      @addtional_repository_information = opts
-      setup_repositories
-      # @contributions = gather unless @delay
+      setup_repositories(opts)
     end
 
     # Public: Add a repository (or array of repositories).
@@ -69,14 +67,20 @@ module Contributions
     # forked and/or wants us to look into.
     #
     # Returns an Array.
-    def forks
-      @repositories.add GithubAPI.forks(@username)
-      update
-    end
+    # def forks
+    #   @repositories.add GithubAPI.forks(@username)
+    #   update
+    # end
 
-    def setup_repositories
-      @repositories = RepositoryList.new
-      forks
+    # Internal: Generate an array of forked repositories for the user.
+    # This array is set as the @repositories variable.
+    #
+    # opts - an array with, possible, keys for :only, :remove, and :add.
+    #
+    # Returns an Array of repositories.
+    def setup_repositories(opts)
+      @repositories = RepositoryList.new(GithubAPI.forks(@username))
+      update(opts)
     end
 
     # Internal: Get the user's contributions to the repository.
@@ -90,8 +94,8 @@ module Contributions
     # forks.
     #
     # Returns an Array.
-    def update
-      @addtional_repository_information.each_pair do |k,v|
+    def update(opts)
+      opts.each_pair do |k,v|
         @repositories.send(k.to_sym, v)
       end
 

@@ -2,21 +2,17 @@ require 'teststrap'
 require 'contributions'
 
 context "Contributions::Contributions" do
-  context ".new" do
-    setup do
-      any_instance_of(Contributions::Contributions, :gather => [])
-      Contributions::Contributions.new(:username => 'u')
-    end
+  setup { Contributions::Contributions.new(:username => 'charlietanksley') }
 
+  context ".new" do
     context "assignments" do
       asserts_topic.assigns :username
+      asserts_topic.assigns :repositories
     end
 
-    context "creates a list of repositories that are forks" do
-      setup do
-        Contributions::Contributions.new(:username => 'charlietanksley')
-      end
-      asserts(:repositories).includes 'thumblemonks/riot'
+    context "finds out about all forks" do
+      asserts(:repositories).includes "msanders/snipmate.vim"
+      asserts(:repositories).includes "thumblemonks/riot"
     end
   end
 
@@ -33,30 +29,30 @@ context "Contributions::Contributions" do
     asserts(:contributions, 'thumblemonks/riot').equals 'no way'
   end
 
-  context "#gather" do
-    setup { Contributions::Contributions.new(:username => 'u') }
+  # context "#gather" do
+  #   setup { Contributions::Contributions.new(:username => 'u') }
 
-    context "asks for the forks, then determines the user's contributions for each" do
-      hookup do
-        mock(topic).forks { ['sinatra/sinatra'] }
-        mock(topic).contributions(anything).times(1) { Hash.new }
-      end
+  #   context "asks for the forks, then determines the user's contributions for each" do
+  #     hookup do
+  #       mock(topic).forks { ['sinatra/sinatra'] }
+  #       mock(topic).contributions(anything).times(1) { Hash.new }
+  #     end
 
-      asserts(:gather).kind_of Hash
-    end
-  end
+  #     asserts(:gather).kind_of Hash
+  #   end
+  # end
 
-  context "#forks" do
-    setup { Contributions::Contributions.new(:username => 'vim-scripts') }
+  # context "#forks" do
+  #   setup { Contributions::Contributions.new(:username => 'vim-scripts') }
 
-    context "adds the result of a GithubAPI.forks to the repositories ivar" do
-      helper(:repos) { ['vim-scripts/test.zip'] }
-      hookup do
-        mock(Contributions::GithubAPI).forks('vim-scripts') { repos }
-      end
-      asserts(:forks).equals ['vim-scripts/test.zip']
-    end
-  end
+  #   context "adds the result of a GithubAPI.forks to the repositories ivar" do
+  #     helper(:repos) { ['vim-scripts/test.zip'] }
+  #     hookup do
+  #       mock(Contributions::GithubAPI).forks('vim-scripts') { repos }
+  #     end
+  #     asserts(:forks).equals ['vim-scripts/test.zip']
+  #   end
+  # end
 
   context "manipulators" do
     setup { Contributions::Contributions.new(:username => 'vim-scripts') }
