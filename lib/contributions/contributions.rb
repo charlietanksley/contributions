@@ -25,24 +25,22 @@ module Contributions
       repositories
     end
 
-    # Public: Return a user's OSS contributions as a hash.
+    # Public: Return a user's OSS contributions as a hash.  If the hash
+    # hasn't already been determined, the contributions are all looked
+    # up and stashed in an ivar: @contributions.  If @contributions
+    # already exists, it is returned without the costly lookup being
+    # performed.
     #
     # Returns a Hash.
     def contributions_as_hash
       @contributions
     end
 
-    # Public: Determine all the contributions for the user.
+    # Public: Determine a user's contributions and reload the
+    # @contributions ivar.
     #
-    # Returns nothing.
-    def gather
-      conts = Hash.new
-      forks.each do |f|
-        conts[f] = contributions(f)
-      end
-
-      conts
-    end
+    # Returns a Hash.
+    # alias :reload_contributions :load_contributions
 
     # Public: Remove a repository (or array of repositories).
     #
@@ -55,6 +53,22 @@ module Contributions
       repositories
     end
 
+    # Public: Accessor method for the @repositories ivar.
+    #
+    # array - an array of 'username/repository_name' strings.
+    #
+    # Returns nothing.
+    def repositories=(array)
+      @repositories = RepositoryList.new(array)
+    end
+
+    # Public: Accessor method for the @repositories ivar.
+    #
+    # Returns an Array of 'username/repository_name' strings.
+    def repositories
+      @repositories.list
+    end
+
     # Internal: Get the names of all the projects that the user has
     # forked and/or wants us to look into.
     #
@@ -62,6 +76,20 @@ module Contributions
     # def forks
     #   @repositories.add GithubAPI.forks(@username)
     #   update
+    # end
+
+
+    # # Internal: Determine a user's contributions and load the
+    # # @contributions ivar.
+    # #
+    # # Returns a Hash.
+    # def load_contributions
+    #   conts = Hash.new
+    #   forks.each do |f|
+    #     conts[f] = contributions(f)
+    #   end
+
+    #   conts
     # end
 
     # Internal: Generate an array of forked repositories for the user.
@@ -92,14 +120,6 @@ module Contributions
       end
 
       repositories
-    end
-
-    def repositories=(array)
-      @repositories = RepositoryList.new(array)
-    end
-
-    def repositories
-      @repositories.list
     end
   end
 end
