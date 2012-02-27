@@ -25,6 +25,8 @@ warned.
 
 ## Requirements
 
+[![Build Status](https://secure.travis-ci.org/charlietanksley/contributions.png)](http://travis-ci.org/charlietanksley/contributions)
+
 Contributions is known to work on:
 
 * MRI 1.8.7
