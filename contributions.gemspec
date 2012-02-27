@@ -15,5 +15,8 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Contributions::VERSION
 
+  gem.add_dependency('json')
+
   gem.add_development_dependency('riot')
+  gem.add_development_dependency('rake')
 end

@@ -8,10 +8,9 @@ module Contributions
     #
     # Returns an Array.
     def self.forks(username)
-      self.repos(username)
-          .select { |r| r["fork"] == true }
-          .map { |r| r["owner"]["login"] + '/' + r["name"] }
-          .map { |r| self.parent(r) }
+      forks = self.repos(username).select { |r| r["fork"] == true }
+      repo_names = forks.map { |r| r["owner"]["login"] + '/' + r["name"] }
+      repo_names.map { |r| self.parent(r) }
     end
 
     # Public: Get the name of the user.

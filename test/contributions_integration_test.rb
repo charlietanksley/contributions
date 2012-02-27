@@ -56,13 +56,16 @@ context "a full run of Contributions::Contributions" do
   context "grabs the contributions when asked" do
 
     context "with the right keys" do
-      setup { topic.contributions_as_hash }
-      asserts("there is a key for the repository") { topic.keys }.equals ['thumblemonks/riot', 'davetron5000/methadone']
+      setup { topic.contributions_as_hash.keys }
+      asserts_topic.includes 'thumblemonks/riot'
+      asserts_topic.includes 'davetron5000/methadone'
     end
 
     context "and saves them off" do
       hookup { topic.contributions_as_hash }
-      asserts { topic.contributions.keys }.equals ['thumblemonks/riot', 'davetron5000/methadone']
+      setup { topic.contributions.keys }
+      asserts_topic.includes 'thumblemonks/riot'
+      asserts_topic.includes 'davetron5000/methadone'
     end
   end
 
