@@ -10,17 +10,11 @@ context "Contributions::Contributions" do
 
     context "assignments" do
       asserts_topic.assigns :username
-      asserts_topic.assigns :delay
-    end
-
-    context "when evaluation is delayed" do
-      setup { Contributions::Contributions.new(:username => 'u', :delay => true) }
-      asserts_topic.assigns :delay, true
     end
 
     context "creates a list of repositories that are forks" do
       setup do
-        Contributions::Contributions.new(:username => 'charlietanksley', :delay => true)
+        Contributions::Contributions.new(:username => 'charlietanksley')
       end
       asserts(:repositories).includes 'thumblemonks/riot'
     end
@@ -28,7 +22,7 @@ context "Contributions::Contributions" do
 
   context "#contributions" do
     setup do
-      Contributions::Contributions.new(:username => 'u', :delay => true)
+      Contributions::Contributions.new(:username => 'u')
     end
 
     hookup do
@@ -40,7 +34,7 @@ context "Contributions::Contributions" do
   end
 
   context "#gather" do
-    setup { Contributions::Contributions.new(:username => 'u', :delay => true) }
+    setup { Contributions::Contributions.new(:username => 'u') }
 
     context "asks for the forks, then determines the user's contributions for each" do
       hookup do
@@ -53,7 +47,7 @@ context "Contributions::Contributions" do
   end
 
   context "#forks" do
-    setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
+    setup { Contributions::Contributions.new(:username => 'vim-scripts') }
 
     context "adds the result of a GithubAPI.forks to the repositories ivar" do
       helper(:repos) { ['vim-scripts/test.zip'] }
@@ -65,7 +59,7 @@ context "Contributions::Contributions" do
   end
 
   context "manipulators" do
-    setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
+    setup { Contributions::Contributions.new(:username => 'vim-scripts') }
 
     context "#remove will remove a single repository" do
       hookup { topic.repositories = ['r/r', 's/s', 't/t'] }
@@ -96,7 +90,7 @@ context "Contributions::Contributions" do
 
   context "#update" do
     context "changes nothing if there are no updates" do
-      setup { Contributions::Contributions.new(:username => 'vim-scripts', :delay => true) }
+      setup { Contributions::Contributions.new(:username => 'vim-scripts') }
       hookup { topic.repositories = ['s/s', 'h/h'] }
 
       asserts(:update).equals ['s/s', 'h/h']
@@ -105,7 +99,6 @@ context "Contributions::Contributions" do
     context "alters the array as per execpt and add" do
       setup do
         Contributions::Contributions.new(:username => 'vim-scripts',
-                                         :delay => true,
                                          :remove => ['h/h'],
                                          :add => ['r/r'])
       end
@@ -117,7 +110,6 @@ context "Contributions::Contributions" do
     context "alters the array as per execpt and add" do
       setup do
         Contributions::Contributions.new(:username => 'vim-scripts',
-                                         :delay => true,
                                          :only => ['h/h'])
       end
       hookup { topic.repositories = ['s/s', 'z/z'] }

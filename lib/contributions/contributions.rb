@@ -7,15 +7,13 @@ module Contributions
   class Contributions
 
     # opts - a Hash with, at the very least, a username.  Optional
-    #        arguments include :delay (set to true to delay evaluation),
-    #        :remove (to ignore some repository), :add (to add), and :only (to
-    #        focus).
+    #        arguments include :remove (to ignore some repository),
+    #        :add (to add), and :only (to focus).
     def initialize(opts={})
       @username = opts.delete(:username)
-      @delay = opts.delete(:delay) || false
       @addtional_repository_information = opts
       setup_repositories
-      @contributions = gather unless @delay
+      # @contributions = gather unless @delay
     end
 
     # Public: Add a repository (or array of repositories).
