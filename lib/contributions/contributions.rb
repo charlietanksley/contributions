@@ -105,6 +105,12 @@ module Contributions
     #   update
     # end
 
+    # Internal: attr_reader for @contributions
+    #
+    # Returns a Hash.
+    def contributions
+      @contributions
+    end
 
     # # Internal: Determine a user's contributions and load the
     # # @contributions ivar.
