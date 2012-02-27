@@ -35,7 +35,20 @@ context "Contributions::Contributions public api with a mocked .new" do
     end
   end
 
-  context ".reload_contributions is an alias for load_contributions" do
+  context ".reload_contributions is an alias for .load_contributions" do
+  end
+
+  context ".remove will drop repositories" do
+    context "if given a string" do
+      setup { topic.remove 'r/r' }
+      denies_topic.includes 'added/added'
+    end
+
+    context "if given an array" do
+      setup { topic.remove ['r/r', 's/s'] }
+      denies_topic.includes 'r/r'
+      denies_topic.includes 's/s'
+    end
   end
 
 
