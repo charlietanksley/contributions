@@ -28,36 +28,23 @@ warned.
 ### Finding contributions
 
 The main idea behind contributions is to make it easy to add your open 
-source contributions to a resume or website.  To that end, the main api 
-has just to commands: `contributions_as_json` and 
-`contributions_as_hash`.
+source contributions to a resume or website.
 
-There is, however, a bit to think about before you use either of these 
-methods.  When you create a new instance of the `Contributions::Contributions` class, 
-the assumption is that you want to go ahead and find all your 
-contributions and then will use one of the other commands to display 
-those contributions.  But finding all your contributions is a fairly 
-labor intensive task (it clones every one of the repositories you have 
-contributed to and then looks at the log for each of them).  You might 
-want to put this off for a few reasons: it requires too many resources, 
-you want to alter the list of repositories to look at, etc.  By default, 
-`Contributions::Contributions.new` will determine all your contributions.  
-`Contributions::Contributions.new` takes a hash of arguments, and if you pass it 
-`:delay => true`, it will not populate the contributions hash.
+A Contributions object takes a hash as an argument.  The only required 
+key is `:username`.  This is the user's github username.  From here you 
+have a few options.  You can manually update the list of repositories 
+(see below).  When you are ready you can use the 
+`.contributions_as_hash` method to return the user's contributions.
 
-    Contributions::Contributions.new(:username => 'u')
-    # => # determines all the contributions for this user
-
-    Contributions::Contributions.new(:username => 'u', :delay => true)
-    # => # does not determine the contributions
-
-When you are ready, you can actually perform the contribution 
-information gathering operation by using the `gather` method:
-
-    c = Contributions::Contributions.new(:username => 'u', :delay => true)
-    # => # does not determine the contributions
-    c.gather
-    # => # gathers them up
+Finding all a user's contributions is very computationally intensive: we 
+actually create a clone (in a temporary directory :)) of every forked 
+repository and look for contributions via a `git log --author=username` 
+command.  The first time you call this method it may take a while to 
+return the hash (especially if you have forks of really big projects).  
+Since you might want to access this hash multiple times, the result is 
+cached.  If you want or need to update this for some reason, use the 
+`.reload_contributions` method and then `.contributions_as_hash` to get 
+the new results.
 
 ### But which projects?
 
@@ -135,26 +122,18 @@ just like `remove`.
 
 ### Determining your contributions
 
-Contributions are determined immediately upon creating a `Contributions::Contributions` 
-object unless `delay` is set to `true`.  At any time, whether they have 
-been determined yet or not, you can get the contributions for a user 
-with the `gather` method.
-
-    c = Contributions::Contributions.new(:username => 'u', :delay => true)
+    c = Contributions::Contributions.new(:username => 'u')
     # => # does not determine the contributions
-    c.gather
-    # => # gathers them up
+    c.contributions_as_hash
+    # => {:project1 => [...], :project2 => [...] ... }
 
 ### Getting the information out
 
-You access commits via one of two commands: `contributions_as_json` and 
-`contributions_as_hash`.  The first returns json, the second, a hash.
+You access commits via `contributions_as_hash`:
 
     c = Contributions::Contributions.new(:username => 'u')
     c.repositories
     # ['sinatra/sinatra', 'rubinius/rubinius']
-    c.contributions_as_json
-    # => JSON data
     c.contributions_as_hash
     # => {:'sinatra/sinatra' => ["commit data", "commit data"], :'rubinius/rubinius' => ["commit data"]}
 
