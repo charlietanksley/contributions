@@ -1,7 +1,7 @@
 require 'teststrap'
 require 'contributions'
 
-context "Contributions::Contributions public api with a mocked .new" do
+context "Contributions public api with mocked .new" do
   hookup do
     stub(Contributions::GithubAPI).forks(anything) { ['r/r', 's/s'] }
   end
@@ -67,7 +67,34 @@ context "Contributions::Contributions public api with a mocked .new" do
     asserts(:project_names).equals { ['r', 's'] }
   end
 
-  context ".reload_contributions is an alias for .load_contributions" do
+  context ".load_contributions" do
+    context "actually calls out to get the contributions for each fork" do
+      hookup do
+        mock(Contributions::Git).contributions('Charlie Tanksley', 'r/r') { Hash[:sha => 1] }
+        mock(Contributions::Git).contributions('Charlie Tanksley', 's/s') { Hash[:sha => 2] }
+      end
+
+      denies(:load_contributions).nil
+    end
+
+    context "returns a hash with repository names as keys" do   
+      hookup do
+        stub(Contributions::Git).contributions('Charlie Tanksley', 'r/r') { Hash[:sha => 1] }
+        stub(Contributions::Git).contributions('Charlie Tanksley', 's/s') { Hash[:sha => 2] }
+      end                                                       
+
+      asserts(:load_contributions).equals Hash['r/r' => Hash[:sha => 1], 's/s' => Hash[:sha => 2]]
+    end
+
+    context "stashes the results in an instance variable" do
+      hookup do
+        stub(Contributions::Git).contributions('Charlie Tanksley', 'r/r') { Hash[:sha => 1] }
+        stub(Contributions::Git).contributions('Charlie Tanksley', 's/s') { Hash[:sha => 2] }
+        topic.load_contributions
+      end                                                       
+
+      asserts(:contributions).equals Hash['r/r' => Hash[:sha => 1], 's/s' => Hash[:sha => 2]]
+    end
   end
 
   context ".remove will drop repositories" do
@@ -183,24 +210,4 @@ context "Contributions::Contributions public api with a mocked .new" do
   #     asserts(:update).equals ['h/h']
   #   end
   # end
-end
-
-
-context "Contributions::Contributions internal methods with a mocked .new" do
-  hookup do
-    mock(Contributions::GithubAPI).forks(anything) { ['r/r', 's/s'] }
-  end
-
-  setup { Contributions::Contributions.new(:username => 'charlietanksley') }
-
-  context ".load_contributions" do
-    context "actually calls out to get the contributions for each fork" do
-    end
-
-    context "returns a hash with repository names as keys" do
-    end
-
-    context "stashes the results in an instance variable" do
-    end
-  end
 end

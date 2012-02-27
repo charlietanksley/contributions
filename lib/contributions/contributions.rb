@@ -37,6 +37,19 @@ module Contributions
       @contributions
     end
 
+    # Public: Determine a user's contributions and load the
+    # @contributions ivar.
+    #
+    # Returns a Hash.
+    def load_contributions
+      @contributions = Hash.new
+      repositories.each do |f|
+        @contributions[f] = get_contributions(f)
+      end
+
+      @contributions
+    end
+
     # Public: Replace the user's forked repositories with the specified
     # repositories.
     #
@@ -63,12 +76,6 @@ module Contributions
     def project_names
       repositories.map { |s| s.match(/[^\/]*$/)[0] }
     end
-
-    # Public: Determine a user's contributions and reload the
-    # @contributions ivar.
-    #
-    # Returns a Hash.
-    # alias :reload_contributions :load_contributions
 
     # Public: Remove a repository (or array of repositories).
     #
@@ -124,19 +131,6 @@ module Contributions
       @contributions
     end
 
-    # # Internal: Determine a user's contributions and load the
-    # # @contributions ivar.
-    # #
-    # # Returns a Hash.
-    # def load_contributions
-    #   conts = Hash.new
-    #   forks.each do |f|
-    #     conts[f] = contributions(f)
-    #   end
-
-    #   conts
-    # end
-
     # Internal: Generate an array of forked repositories for the user.
     # This array is set as the @repositories variable.
     #
@@ -151,7 +145,7 @@ module Contributions
     # Internal: Get the user's contributions to the repository.
     #
     # Returns a Hash.
-    def contributions(repository)
+    def get_contributions(repository)
       Git.contributions GithubAPI.name(@username), repository
     end
 
