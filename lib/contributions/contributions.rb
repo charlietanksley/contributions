@@ -102,15 +102,6 @@ module Contributions
       @repositories.list
     end
 
-    # Internal: Get the names of all the projects that the user has
-    # forked and/or wants us to look into.
-    #
-    # Returns an Array.
-    # def forks
-    #   @repositories.add GithubAPI.forks(@username)
-    #   update
-    # end
-
     # Internal: attr_accessor for @contributions.  This method really only
     # exists for testing.
     #
