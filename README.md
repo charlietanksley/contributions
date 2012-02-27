@@ -29,7 +29,6 @@ warned.
 
 Contributions is known to work on:
 
-* MRI 1.8.7
 * MRI 1.9.2
 * MRI 1.9.3
 
