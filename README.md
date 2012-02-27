@@ -23,6 +23,20 @@ Right now, Contributions doesn't know what to do if you have more than
 100 public repositories.  I'll fix that later.  Consider yourself 
 warned.
 
+## Requirements
+
+Contributions is known to work on:
+
+* MRI 1.8.7
+* MRI 1.9.2
+* MRI 1.9.3
+
+At present it does not work on:
+
+* Rubinius 1.2.4
+
+I don't know about any other Rubys.
+
 ## Usage
 
 ### Finding contributions
