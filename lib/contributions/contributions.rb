@@ -36,6 +36,20 @@ module Contributions
       @contributions
     end
 
+    # Public: Provide the names for all the forked projects.
+    #
+    # Example:
+    #
+    #     user.repositories
+    #     # => ['r/r', 's/s']
+    #     user.project_names
+    #     # => ['r', 's']
+    #
+    # Returns an Array.
+    def project_names
+      repositories.map { |s| s.match(/[^\/]*$/)[0] }
+    end
+
     # Public: Determine a user's contributions and reload the
     # @contributions ivar.
     #

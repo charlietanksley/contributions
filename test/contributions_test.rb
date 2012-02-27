@@ -35,6 +35,10 @@ context "Contributions::Contributions public api with a mocked .new" do
     end
   end
 
+  context ".project_names returns an array of project names" do
+    asserts(:project_names).equals { ['r', 's'] }
+  end
+
   context ".reload_contributions is an alias for .load_contributions" do
   end
 
