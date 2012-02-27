@@ -1,7 +1,7 @@
 require 'teststrap'
 require 'contributions'
 
-context "Contributions::Contributions with unmocked .new" do
+context "Contributions::Contributions" do
   hookup { RR.reset }
   helper(:full) { Contributions::Contributions.new(:username => 'charlietanksley') }
 
@@ -41,3 +41,35 @@ context "Contributions::Contributions with unmocked .new" do
   end
 end
 
+context "a full run of Contributions::Contributions" do
+  setup { Contributions::Contributions.new(:username => 'charlietanksley',
+                                           :only => ['thumblemonks/riot', 'msanders/snipmate.vim', 'davetron5000/methadone']) }
+
+  context "starts with a list of repositories" do
+    asserts(:repositories).equals ['thumblemonks/riot', 'msanders/snipmate.vim', 'davetron5000/methadone']
+  end
+
+  context "does not start with any contributions" do
+    asserts(:contributions).nil
+  end
+
+  context "grabs the contributions when asked" do
+
+    context "with the right keys" do
+      setup { topic.contributions_as_hash }
+      asserts("there is a key for the repository") { topic.keys }.equals ['thumblemonks/riot', 'davetron5000/methadone']
+    end
+
+    context "and saves them off" do
+      hookup { topic.contributions_as_hash }
+      asserts { topic.contributions.keys }.equals ['thumblemonks/riot', 'davetron5000/methadone']
+    end
+  end
+
+  context "when the list is updated" do
+    hookup { topic.remove ['thumblemonks/riot', 'davetron5000/methadone'] }
+    hookup { topic.load_contributions }
+    asserts { topic.contributions_as_hash.keys }.equals []
+    asserts(:contributions_as_hash).equals Hash[]
+  end
+end

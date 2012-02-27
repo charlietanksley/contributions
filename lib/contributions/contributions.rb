@@ -1,6 +1,3 @@
-# TODO: Something is wrong with the .repositories method.  I don't know
-# why, but it it returning an empty array.  And that is messing things
-# up.  Big time.
 require 'json'
 
 module Contributions
@@ -44,7 +41,8 @@ module Contributions
     def load_contributions
       @contributions = Hash.new
       repositories.each do |f|
-        @contributions[f] = get_contributions(f)
+        conts = get_contributions(f)
+        @contributions[f] = conts unless conts.empty?
       end
 
       @contributions
