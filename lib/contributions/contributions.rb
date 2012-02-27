@@ -1,3 +1,6 @@
+# TODO: Something is wrong with the .repositories method.  I don't know
+# why, but it it returning an empty array.  And that is messing things
+# up.  Big time.
 require 'json'
 
 module Contributions
@@ -12,7 +15,6 @@ module Contributions
       @delay = opts.delete(:delay) || false
       @addtional_repository_information = opts
       setup_repositories
-      #@repositories = forks#RepositoryList.new
       @contributions = gather unless @delay
     end
 

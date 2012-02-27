@@ -17,6 +17,13 @@ context "Contributions::Contributions" do
       setup { Contributions::Contributions.new(:username => 'u', :delay => true) }
       asserts_topic.assigns :delay, true
     end
+
+    context "creates a list of repositories that are forks" do
+      setup do
+        Contributions::Contributions.new(:username => 'charlietanksley', :delay => true)
+      end
+      asserts(:repositories).includes 'thumblemonks/riot'
+    end
   end
 
   context "#contributions" do

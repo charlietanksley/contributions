@@ -1,4 +1,5 @@
 require 'tmpdir'
+require 'fileutils'
 require 'contributions/string_utils'
 
 module Contributions
@@ -38,6 +39,8 @@ module Contributions
         Dir.chdir(cloned_repo_name) do
           value = yield
         end
+
+        FileUtils.rm_rf(cloned_repo_name)
       end
 
       value
