@@ -35,6 +35,22 @@ context "Contributions::Contributions public api with a mocked .new" do
     end
   end
 
+  context ".only will trade out repositories" do
+    context "if given a string" do
+      setup { topic.only 'added/added' }
+      asserts_topic.includes 'added/added'
+      denies_topic.includes 'r/r'
+      denies_topic.includes 's/s'
+    end
+
+    context "if given an array" do
+      setup { topic.only ['added/first', 'added/second'] }
+      asserts_topic.includes 'added/first'
+      asserts_topic.includes 'added/second'
+      denies_topic.includes 'r/r'
+      denies_topic.includes 's/s'
+    end
+  end
   context ".project_names returns an array of project names" do
     asserts(:project_names).equals { ['r', 's'] }
   end

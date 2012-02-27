@@ -36,6 +36,19 @@ module Contributions
       @contributions
     end
 
+    # Public: Replace the user's forked repositories with the specified
+    # repositories.
+    #
+    # repos - a 'username/repository_name' string, or an array of such
+    #         strings.
+    #
+    # Returns the updated array of repositories.
+    def only(repos)
+      @repositories.only repos
+
+      repositories
+    end
+
     # Public: Provide the names for all the forked projects.
     #
     # Example:
