@@ -33,6 +33,7 @@ module Contributions
     #
     # Returns a Hash.
     def contributions_as_hash
+      load_contributions unless @contributions
       @contributions
     end
 
@@ -105,7 +106,18 @@ module Contributions
     #   update
     # end
 
-    # Internal: attr_reader for @contributions
+    # Internal: attr_accessor for @contributions.  This method really only
+    # exists for testing.
+    #
+    # hash - a hash.
+    #
+    # Returns a Hash.
+    def contributions=(hash)
+      @contributions = hash
+    end
+
+    # Internal: attr_reader for @contributions.  This method really only
+    # exists for testing.
     #
     # Returns a Hash.
     def contributions

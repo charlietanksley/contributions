@@ -32,6 +32,17 @@ context "Contributions::Contributions public api with a mocked .new" do
 
   context ".contributions_as_hash" do
     context "does not reload hash if it already exists" do
+      hookup do
+        topic.contributions = Hash[:k => 'v']
+        dont_allow(topic).load_contributions
+      end
+
+      asserts(:contributions_as_hash).equals Hash[:k => 'v']
+    end
+
+    context "calls #load_contributions if there aren't any contributions yet" do
+      hookup { mock(topic).load_contributions { topic.contributions = Hash[:k => 'v'] } }
+      asserts(:contributions_as_hash).equals Hash[:k => 'v']
     end
   end
 
@@ -51,6 +62,7 @@ context "Contributions::Contributions public api with a mocked .new" do
       denies_topic.includes 's/s'
     end
   end
+
   context ".project_names returns an array of project names" do
     asserts(:project_names).equals { ['r', 's'] }
   end
