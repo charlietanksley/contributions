@@ -32,14 +32,6 @@ module Contributions
       @contributions
     end
 
-    # Public: Return a user's OSS contributions as JSON.
-    #
-    # Returns JSON.
-    def contributions_as_json
-      JSON.generate(@contributions)
-    end
-
-
     # Public: Determine all the contributions for the user.
     #
     # Returns nothing.
