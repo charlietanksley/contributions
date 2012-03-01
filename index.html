@@ -6,9 +6,9 @@
 <!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
 <meta charset="utf-8">
-<title></title>
-<meta name="description" content="">
-<meta name="author" content="">
+<title>Contributions: a Ruby gem</title>
+<meta name="description" content="the homepage for the contributions gem">
+<meta name="author" content="Charlie Tanksley">
 
 <!-- /ht Andy Clarke - http://front.ie/lkCwyf -->
 <meta http-equiv="cleartype" content="on">
@@ -36,11 +36,211 @@
   <div id="container" class="cf">
     
     <header>
-      <h1>This is happening!!!</h1>
+      <h1>Contributions</h1>
+      <span class='tag-line'>Detailed information about all your OSS contributions.</span>
     </header>
     
     <div id="main" role="main">
-      <p>This is the body.</p>
+
+      <nav id='page-navigation'>
+        <ul>
+          <li><a href='#installation'>Installation</a></li>
+          <li><a href='#requirements'>Requirements</a></li>
+          <li><a href='#usage'>Usage</a></li>
+        </ul>
+      </nav>
+
+
+      <article class='column'>
+        <h1><a name='installation' class='target'>Installation</a></h1>
+
+        <p>Add this line to your application's Gemfile:</p>
+
+        <pre>
+gem 'contributions'
+        </pre>
+
+        <p>And then execute:</p>
+
+        <pre>
+$ bundle
+        </pre>
+
+        <p>Or install it yourself via:</p>
+
+        <pre>
+$ gem install contributions
+        </pre>
+
+        <p>Note that if you aren't using something like RVM or rbenv, you might
+          have to <code>sudo gem install contributions</code>.  This is might
+          be a good reason to use RVM or rbenv!</p>
+
+        <h1>Fair Warning:</h1>
+
+        <p>Right now, Contributions doesn't know what to do if you have more than 
+          100 public repositories.  I'll fix that later.  Consider yourself 
+          warned.</p>
+
+        <h1><a name='requirements' class='target'>Requirements</a></h1>
+
+        <p>Contributions is known to work on:</p>
+
+        <ul>
+          <li>MRI 1.8.7</li>
+          <li>MRI 1.9.2</li>
+          <li>MRI 1.9.3</li>
+        </ul>
+
+        <p>At present it does not work on:</p>
+
+        <ul>
+          <li>Rubinius 1.2.4</li>
+        </ul>
+
+        <p>I don't know about any other Rubys.  It doesn't pass on TravisCI.
+          That could be my fault: the tests are pretty labor-intensive and
+          require more than a handful of <code>git clone</code>s.  They were
+          taking like 4+ minutes to fail, so I'm not certain what was going on.
+          Whatever the reason, in my local tests, Contributions works on the
+          Rubys above.  Let me know if there are problems.</p>
+
+        <h1><a name='usage' class='target'>Usage</a></h1>
+
+        <h2>Finding contributions</h2>
+
+        <p>The main idea behind contributions is to make it easy to add your open 
+          source contributions to a resume or website.</p>
+
+        <p>A Contributions object takes a hash as an argument.  The only required
+          key is <code>:username</code>.  This is the user's github username.  From here you
+          have a few options.  You can manually update the list of repositories
+          (see below).  When you are ready you can use the
+          <code>.contributions_as_hash</code> method to return the user's contributions.</p>
+
+        <p>Finding all a user's contributions is very computationally intensive:
+          we actually create a clone (in a temporary directory :)) of every
+          forked repository and look for contributions via a <code>git log --author='First Last'</code> 
+          command.  The first time you call this method it may
+          take a while to return the hash (especially if you have forks of really
+          big projects).  Since you might want to access this hash multiple
+          times, the result is cached.  If you want or need to update this for
+          some reason, use the <code>.reload_contributions</code> method and then
+          <code>.contributions_as_hash</code> to get the new results.</p>
+
+        <h2>But which projects?</h2>
+
+        <p>By default, contributions assumes that a user has contributed to every
+          forked OSS project in his or her github account.  When you generate
+          your list of contributions, contributions will look for contributions
+          in every forked repository in your account.  (Note: it will look not
+          for additions you have made locally, but for additions that have been
+          merged into the forked project; it looks for commits in that project
+          for which you are either an author or committer.)</p>
+
+        <p>Some people have lots of forks that they don't contribute to.  In that
+          case, you can pass an array of projects to ignore to contributions:</p>
+
+        <pre>
+Contributions::Contributions.new(:username => 'u', :remove => ['homebrew'])
+        </pre>
+
+        <p>If you have contributed to projects that you have not forked
+          (perhaps you keep a tidy github account :)), you can add those in by
+          passing an array of projects to contributions:</p>
+
+
+        <pre>
+Contributions::Contributions.new(:username => 'u', :add => ['rubinius/rubinius'])
+        </pre>
+
+        <p>Notice that you must pass both the repository name and the username in
+          this case.</p>
+
+        <p>Finally, you might want to only get your contributions to a certain
+          set of repositories, ignoring any others (e.g., any others your
+          forked).</p>
+
+        <pre>
+Contributions::Contributions.new(:username => 'u', :only => ['rubinius/rubinius'])
+        </pre>
+
+        <p>The envisioned use case for this command is when you have lots of
+          forked repositories, perhaps even ones you have contributed to, but
+          only care to get your contributions for one.</p>
+
+        <h2>Adding or subtracting contributions</h2>
+
+        <p>Before you determine the contributions for a user, you might need to
+          alter the list of repositories you are looking at.  You can find out
+          which repositories are currently being considered with the
+          <code>repositories</code> method:</p>
+
+        <pre>
+c = Contributions::Contributions.new(:username => 'u')
+c.repositories
+# ['rubinius/rubinius', 'mxcl/homebrew']
+        </pre>
+
+        <p>You can find out just the project names with the <code>project_names</code> method</p>
+
+        <pre>
+c = Contributions::Contributions.new(:username => 'u')
+c.project_names
+# ['rubinius', 'homebrew']
+        </pre>
+
+        <p>You can subtract a repository using the <code>remove</code> method.  The <code>remove</code>
+          method takes either a string (in the case of a single repository) or an
+          array of strings as an argument.  The repositories should be specified
+          in the username/repository pattern.</p>
+
+        <pre>
+c = Contributions::Contributions.new(:username => 'u')
+c.repositories
+# ['sinatra/sinatra', 'rubinius/rubinius', 'mxcl/homebrew']
+c.remove('sinatra/sinatra')
+# ['rubinius/rubinius', 'mxcl/homebrew']
+c.remove(['rubinius/rubinius', 'mxcl/homebrew'])
+# []
+        </pre>
+
+        <p>You can add a repository using the <code>add</code> command.  It takes arguments 
+          just like <code>remove</code>.</p>
+
+        <pre>
+c = Contributions::Contributions.new(:username => 'u')
+c.repositories
+# []
+c.add('sinatra/sinatra')
+# ['sinatra/sinatra']
+c.add(['rubinius/rubinius', 'mxcl/homebrew'])
+# ['sinatra/sinatra', 'rubinius/rubinius', 'mxcl/homebrew']
+        </pre>
+
+        <h2>Determining your contributions</h2>
+
+        <pre>
+c = Contributions::Contributions.new(:username => 'u')
+# => # does not determine the contributions
+c.contributions_as_hash
+# => {:project1 => [...], :project2 => [...] ... }
+        </pre>
+
+        <h2>Getting the information out</h2>
+
+        <p>You access commits via <code>contributions_as_hash</code>:</p>
+
+        <pre>
+c = Contributions::Contributions.new(:username => 'u')
+c.repositories
+# ['sinatra/sinatra', 'rubinius/rubinius']
+c.contributions_as_hash
+# => {:'sinatra/sinatra' => ["commit data", "commit data"], :'rubinius/rubinius' => ["commit data"]}
+        </pre>
+
+      </article>
+
     </div>
 
     <footer></footer>
@@ -50,3 +250,4 @@
 </body>
 
 </html>
+

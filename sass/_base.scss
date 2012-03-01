@@ -1,5 +1,12 @@
 @import 'compass';
+// @import "compass/typography/lists/horizontal-list";
+@import "compass/typography/lists/inline-list";
 
 // $display-font: 
-$sans-font: 'PT Sans Narrow', Georgia, sans-serif;
-$serif-font: 'PT Serif', Helvetica, serif;
+$sans-font: 'PT Sans Narrow', 'Helvetica Neue', serif, sans-serif;
+$serif-font: 'PT Serif', Georgia, serif;
+$monospaced-font: 'Menlo', monospace;
+
+$base-text: #333;
+$light-blue: #83B5C8;
+$dark-blue: #16333D;

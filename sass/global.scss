@@ -62,7 +62,7 @@ body {
   font-family: $serif-font;
   font-size: 1em;
   line-height: 1.618em;
-  color: #333; }
+  color: $base-text; }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $sans-font;
@@ -99,6 +99,27 @@ i, em {
 
 small {
   font-size: 80%; }
+
+pre, code {
+  font-family: $monospaced-font;
+  font-size: 80%; }
+
+// TODO: Can anything be done here?
+pre {
+  overflow: auto;
+  max-width: 30em;
+  margin-bottom: 1em;
+  padding: 1em 1em 0 1em;
+  border: 1px solid $base-text;
+  &:hover {
+    position: relative;
+    max-width: 100%;
+    z-index: 99; } }
+
+pre:hover {
+	position: relative;
+  max-width: 100%;
+	z-index: 99; }
 
 /* 4. LINKS
 ----------------------------------------------------------------------------------------*/
@@ -145,3 +166,42 @@ aside {
 
 .ie6 .cf {
   zoom: 1; }
+
+/* ADDED BY ME */
+
+#page-navigation {
+  margin-bottom: 1em;
+  text-align: center;
+  font-size: 1.2em;
+  ul {
+    @include inline-list; }
+  li {
+    padding: 0.5em; }
+  a {
+    text-decoration: none;
+    padding: 0.4em;
+    &:hover, &:active {
+      text-decoration: underline; } } }
+
+header {
+  text-align: center;
+  margin-bottom: 2em;
+
+  h1 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-size: 4em; }
+  span {
+    font-size: 1.5em;
+    font-family: $sans-font; } }
+
+h1 {
+  font-size: 2em; }
+h2 {
+  font-size: 1.6em; }
+h3 {
+  font-size: 1.2em; }
+
+a.target {
+  text-decoration: none;
+  color: $base-text; }

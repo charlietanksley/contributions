@@ -7,6 +7,28 @@
   margin: 0 auto;
   max-width: 60em; }
 
+header {
+  text-align: center;
+  margin-bottom: 2em;
+
+  h1 {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-size: 6em; }
+  span {
+    font-size: 1.5em;
+    font-family: $sans-font; } }
+
+h1 {
+  font-size: 2.5em; }
+h2 {
+  font-size: 1.8em; }
+h3 {
+  font-size: 1.4em; }
+h4 {
+  font-size: 1.2em; }
+
+
 /* 9. CUSTOM LAYOUT & TYPOGRAPHY (Mummy bear)
 ----------------------------------------------------------------------------------------*/
 @media screen and (min-width: 30em) and (max-width: 63.236em) {
