@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Contributions::RepositoryList - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/contributions/repository_list.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    <nav id="sections-section" class="section">
+  <h3 class="section-header">Sections</h3>
+  <ul class="link-list">
+    
+      <li><a href="#5Buntitled-5D"></a></li>
+    
+      <li><a href="#Public">Public</a></li>
+    
+  </ul>
+</nav>
+
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-new">::new</a>
+    
+    <li><a href="#method-i-add">#add</a>
+    
+    <li><a href="#method-i-key_value_pairs">#key_value_pairs</a>
+    
+    <li><a href="#method-i-only">#only</a>
+    
+    <li><a href="#method-i-remove">#remove</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Contributions.html">Contributions</a>
+  
+    <li><a href="../Contributions/Contributions.html">Contributions::Contributions</a>
+  
+    <li><a href="../Contributions/Git.html">Contributions::Git</a>
+  
+    <li><a href="../Contributions/GithubAPI.html">Contributions::GithubAPI</a>
+  
+    <li><a href="../Contributions/RepositoryList.html">Contributions::RepositoryList</a>
+  
+    <li><a href="../Contributions/StringUtils.html">Contributions::StringUtils</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Contributions::RepositoryList</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+    <!-- Attributes -->
+    <section id="attribute-method-details" class="method-section section">
+      <h3 class="section-header">Attributes</h3>
+
+      
+      <div id="attribute-i-list" class="method-detail">
+        <div class="method-heading attribute-method-heading">
+          <span class="method-name">list</span><span
+            class="attribute-access-type">[R]</span>
+        </div>
+
+        <div class="method-description">
+        
+        
+        
+        </div>
+      </div>
+      
+    </section><!-- attribute-method-details -->
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">(*args)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File lib/contributions/repository_list.rb, line 6</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(*<span class="ruby-identifier">args</span>)
+  <span class="ruby-ivar">@list</span> = [<span class="ruby-identifier">args</span>].<span class="ruby-identifier">flatten</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- new-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- new-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+  
+  
+  <section id="Public" class="documentation-section">
+    
+    <div class="documentation-section-title">
+      <h2 class="section-header">
+        Public
+      </h2>
+      <span class="section-click-top">
+        <a href="#top">&uarr; top</a>
+      </span>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-instance-Public-method-details" class="method-section section">
+      <h3 class="section-header">Public Instance Methods</h3>
+
+    
+      <div id="method-i-add" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">add</span><span
+            class="method-args">(repos)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Add a string or array of strings to the repository list.</p>
+<dl class="rdoc-list note-list"><dt>repos
+<dd>
+<p>a string or an array of strings (each of which is a ‘username/repo’)</p>
+</dd></dl>
+
+<p>Returns a <a href="RepositoryList.html">RepositoryList</a></p>
+          
+
+          
+          <div class="method-source-code" id="add-source">
+            <pre><span class="ruby-comment"># File lib/contributions/repository_list.rb, line 16</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">add</span>(<span class="ruby-identifier">repos</span>)
+  <span class="ruby-ivar">@list</span>.<span class="ruby-identifier">push</span>(<span class="ruby-identifier">repos</span>).<span class="ruby-identifier">flatten!</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- add-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- add-method -->
+
+    
+      <div id="method-i-key_value_pairs" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">key_value_pairs</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Turn repositories into key value pairs.</p>
+
+<p>Returns an Array of Hashes {:username, :repository}</p>
+          
+
+          
+          <div class="method-source-code" id="key_value_pairs-source">
+            <pre><span class="ruby-comment"># File lib/contributions/repository_list.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">key_value_pairs</span>
+  <span class="ruby-identifier">results</span> = []
+  <span class="ruby-ivar">@list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">p</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">'/'</span>)
+    <span class="ruby-identifier">results</span>.<span class="ruby-identifier">push</span> <span class="ruby-constant">Hash</span>[<span class="ruby-value">:username</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">p</span>[<span class="ruby-value">0</span>], <span class="ruby-value">:repository</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">p</span>[<span class="ruby-value">1</span>]]
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">results</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- key_value_pairs-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- key_value_pairs-method -->
+
+    
+      <div id="method-i-only" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">only</span><span
+            class="method-args">(repos)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Replace list of repositories with the list provided.</p>
+<dl class="rdoc-list note-list"><dt>repos
+<dd>
+<p>a string or an array of strings (each of which is a ‘username/repo’)</p>
+</dd></dl>
+
+<p>Returns a <a href="RepositoryList.html">RepositoryList</a></p>
+          
+
+          
+          <div class="method-source-code" id="only-source">
+            <pre><span class="ruby-comment"># File lib/contributions/repository_list.rb, line 40</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">only</span>(<span class="ruby-identifier">repos</span>)
+  <span class="ruby-ivar">@list</span> = [<span class="ruby-identifier">repos</span>].<span class="ruby-identifier">flatten</span>
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- only-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- only-method -->
+
+    
+      <div id="method-i-remove" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">remove</span><span
+            class="method-args">(repos)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Remove a string or array of strings from the repository list.</p>
+<dl class="rdoc-list note-list"><dt>repos
+<dd>
+<p>a string or an array of strings (each of which is a ‘username/repo’)</p>
+</dd></dl>
+
+<p>Returns a <a href="RepositoryList.html">RepositoryList</a></p>
+          
+
+          
+          <div class="method-source-code" id="remove-source">
+            <pre><span class="ruby-comment"># File lib/contributions/repository_list.rb, line 51</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">remove</span>(<span class="ruby-identifier">repos</span>)
+  <span class="ruby-ivar">@list</span>.<span class="ruby-identifier">delete_if</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">repos</span>].<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">e</span> }
+  <span class="ruby-keyword">self</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- remove-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- remove-method -->
+
+    
+    </section><!-- public-instance-method-details -->
+  
+  </section><!-- Public -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
