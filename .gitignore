@@ -1,2 +1,4 @@
 .sass-cache/
 tmp/
+.rbenv-version
+pkg/
