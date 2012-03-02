@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
+<title>class Contributions::Git - RDoc Documentation</title>
+
+<link type="text/css" media="screen" href="../rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="../index.html">Home</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>lib/contributions/git.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    <nav id="sections-section" class="section">
+  <h3 class="section-header">Sections</h3>
+  <ul class="link-list">
+    
+      <li><a href="#5Buntitled-5D"></a></li>
+    
+      <li><a href="#Public">Public</a></li>
+    
+      <li><a href="#Internal">Internal</a></li>
+    
+  </ul>
+</nav>
+
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">Object
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-clone">::clone</a>
+    
+    <li><a href="#method-c-contributions">::contributions</a>
+    
+    <li><a href="#method-c-log_format">::log_format</a>
+    
+    <li><a href="#method-c-read_log">::read_log</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="../Contributions.html">Contributions</a>
+  
+    <li><a href="../Contributions/Contributions.html">Contributions::Contributions</a>
+  
+    <li><a href="../Contributions/Git.html">Contributions::Git</a>
+  
+    <li><a href="../Contributions/GithubAPI.html">Contributions::GithubAPI</a>
+  
+    <li><a href="../Contributions/RepositoryList.html">Contributions::RepositoryList</a>
+  
+    <li><a href="../Contributions/StringUtils.html">Contributions::StringUtils</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class Contributions::Git</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="ENDING">ENDING
+        
+        <dd class="description">
+        
+      
+        <dt id="KEYS">KEYS
+        
+        <dd class="description">
+        
+      
+        <dt id="SEPARATOR">SEPARATOR
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-log_format" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">log_format</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="log_format-source">
+            <pre><span class="ruby-comment"># File lib/contributions/git.rb, line 60</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">log_format</span>
+  [<span class="ruby-string">&quot;%h&quot;</span>, <span class="ruby-string">&quot;%ci&quot;</span>, <span class="ruby-string">&quot;%s&quot;</span>, <span class="ruby-string">&quot;%b&quot;</span>].<span class="ruby-identifier">join</span>(<span class="ruby-constant">SEPARATOR</span>) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">ENDING</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- log_format-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- log_format-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+  
+  
+  <section id="Public" class="documentation-section">
+    
+    <div class="documentation-section-title">
+      <h2 class="section-header">
+        Public
+      </h2>
+      <span class="section-click-top">
+        <a href="#top">&uarr; top</a>
+      </span>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-Public-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-clone" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">clone</span><span
+            class="method-args">(repository) { || ... }</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Clone a repository and run the block passed inside the newly cloned
+repository.</p>
+<dl class="rdoc-list note-list"><dt>repository
+<dd>
+<p>a ‘username/repository_name’ string.</p>
+</dd><dt>block
+<dd>
+<p>a block to be executed inside the newly cloned directory.</p>
+</dd></dl>
+
+<p>Returns the return value of the block.</p>
+          
+
+          
+          <div class="method-source-code" id="clone-source">
+            <pre><span class="ruby-comment"># File lib/contributions/git.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">clone</span>(<span class="ruby-identifier">repository</span>, &amp;<span class="ruby-identifier">block</span>)
+  <span class="ruby-identifier">value</span> = <span class="ruby-string">''</span>
+  <span class="ruby-identifier">repo_name</span> = <span class="ruby-identifier">repository</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp">%r([^\/]*$)/</span>)[<span class="ruby-value">1</span>]
+  <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">mktmpdir</span>(<span class="ruby-identifier">repo_name</span>) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dir</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">cloned_repo_name</span> = <span class="ruby-identifier">dir</span> <span class="ruby-operator">+</span> <span class="ruby-string">'/'</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">repo_name</span>
+    <span class="ruby-identifier">system</span> <span class="ruby-node">&quot;git clone -q https://github.com/#{repository} #{cloned_repo_name}&quot;</span>
+    <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">cloned_repo_name</span>) <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">value</span> = <span class="ruby-keyword">yield</span>
+    <span class="ruby-keyword">end</span>
+
+    <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">rm_rf</span>(<span class="ruby-identifier">cloned_repo_name</span>)
+  <span class="ruby-keyword">end</span>
+
+  <span class="ruby-identifier">value</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- clone-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- clone-method -->
+
+    
+      <div id="method-c-contributions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">contributions</span><span
+            class="method-args">(user, repository)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>Get all the contributions in a repository by a user (contributions for
+which the user is the <strong>author</strong>).</p>
+<dl class="rdoc-list note-list"><dt>user
+<dd>
+<p>a user’s name (the name that shows up as the committer or author—e.g.,
+‘John Smith’</p>
+</dd><dt>repository
+<dd>
+<p>a ‘username/repository_name’ string.</p>
+</dd></dl>
+
+<p>Returns an Array of Hashes with keys for :sha, :date, :subject, :body</p>
+          
+
+          
+          <div class="method-source-code" id="contributions-source">
+            <pre><span class="ruby-comment"># File lib/contributions/git.rb, line 20</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">contributions</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">repository</span>)
+  <span class="ruby-identifier">log</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">clone</span>(<span class="ruby-identifier">repository</span>) { <span class="ruby-keyword">self</span>.<span class="ruby-identifier">read_log</span>(<span class="ruby-identifier">user</span>) }
+  <span class="ruby-constant">StringUtils</span>.<span class="ruby-identifier">string_to_hash</span>(<span class="ruby-identifier">log</span>, <span class="ruby-constant">KEYS</span>, <span class="ruby-constant">SEPARATOR</span>, <span class="ruby-constant">ENDING</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- contributions-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- contributions-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- Public -->
+
+  
+  
+  <section id="Internal" class="documentation-section">
+    
+    <div class="documentation-section-title">
+      <h2 class="section-header">
+        Internal
+      </h2>
+      <span class="section-click-top">
+        <a href="#top">&uarr; top</a>
+      </span>
+    </div>
+    
+
+    
+
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-Internal-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-read_log" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">read_log</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>The command to read the git log.</p>
+<dl class="rdoc-list note-list"><dt>user
+<dd>
+<p>the user’s name.</p>
+</dd></dl>
+
+<p>Returns nothing.</p>
+          
+
+          
+          <div class="method-source-code" id="read_log-source">
+            <pre><span class="ruby-comment"># File lib/contributions/git.rb, line 54</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">read_log</span>(<span class="ruby-identifier">user</span>)
+  <span class="ruby-comment"># We want a string returned (for parsing); so use read over</span>
+  <span class="ruby-comment"># readlines.</span>
+  <span class="ruby-constant">IO</span>.<span class="ruby-identifier">popen</span>(<span class="ruby-node">&quot;git log --author='#{user}' --format='#{self.log_format}' --no-color&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">io</span><span class="ruby-operator">|</span> <span class="ruby-identifier">io</span>.<span class="ruby-identifier">read</span> }
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- read_log-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- read_log-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- Internal -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+
